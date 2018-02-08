@@ -14,7 +14,7 @@ session_start();
 </head>
 <body style="background-color: #efefef">
  <!-- Navbar -->
-        <nav class="navbar navbar-light navbar-toggleable-md" style="background-color: #012c9c">
+        <nav class="navbar navbar-light navbar-toggleable-md" style="background-color: #1ca382">
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon" />
             </button>
