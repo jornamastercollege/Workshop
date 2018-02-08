@@ -12,7 +12,7 @@ session_start();
 <!-- Favicon -->
 <link href="img/logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 </head>
-<body style="background-color: #efefef">
+<body style="background-color: #333e42">
  <!-- Navbar -->
         <nav class="navbar navbar-light navbar-toggleable-md" style="background-color: #1ca382">
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
