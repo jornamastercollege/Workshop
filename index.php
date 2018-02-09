@@ -4,7 +4,7 @@
 //	include 'includes/db.php';
 	
 # Background #
-	$bg = '/img/bg-1.jpg';
+	$bg = 'bg-1.jpg';
 	$i = rand(0, count($bg)-1);
 	$selectedBg = "$bg[$i]";
 
@@ -77,7 +77,7 @@
 		<link href="http://groomecs.com/2013/templates/beez_20/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<style type="text/css" media="screen">
 			body {
-				background: url(images/<?php echo $selectedBg; ?>) no-repeat;
+				background: url(img/<?php echo $selectedBg; ?>) no-repeat;
 				height: 100%;
 				width: 100%;
 				max-height: 100%;
