@@ -1,0 +1,90 @@
+html, body {
+	height: 100%;
+	margin:0;
+}
+
+.body{
+	margin-left: 200px !important;
+}
+.bg {
+	height: 100%;
+	width: 100%;
+	max-height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+}
+
+.navbar-nav {
+	flex-direction:row;
+}
+.nav-link {
+	padding-right: .5rem !important;
+	padding-left: .5rem !important;
+}
+
+.Due {
+	min-width: 110px !important;
+}
+.werk {
+	text-decoration: none;
+	cursor: default;
+}
+
+.tabledtickets{
+	width:50% !important; 
+    margin-left:20%; 
+    margin-right:30%;
+}
+.login {
+	position: absolute !important;
+	width: auto;
+	box-shadow: 16px 17px 110px 12px rgba(0,0,0,0.59);
+	padding: 12px !important;
+	margin: 0 auto;
+	top: 50%;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.wrong {
+	position: absolute;
+	width: 16%;
+	height: 100px;
+	margin: auto;
+	box-shadow: 16px 17px 110px 12px rgba(0,0,0,0.59);
+	padding: 10px !important;
+	margin-top: 3%;
+	z-index: 1;
+	overflow: hidden;
+	left: 42%;
+	background-color: red !important;
+	text-align: center;
+	color: white;
+}
+.succes {
+	position: absolute;
+	width: 16%;
+	height: 7%;
+	margin: auto;
+	box-shadow: 16px 17px 110px 12px rgba(0,0,0,0.59);
+	padding: 10px !important;
+	margin-top: 3%;
+	z-index: 1;
+	overflow: hidden;
+	left: 42%;
+	background-color: #33CC33 !important;
+	text-align: center;
+	color: black;
+}
+table {
+	width:100%!important;
+}
+btn {
+	text-align: right !important;
+}
+
+.werk{
+	color: #33ff00 !important;
+}

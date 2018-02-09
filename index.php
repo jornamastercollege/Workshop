@@ -4,7 +4,8 @@
 //	include 'includes/db.php';
 	
 # Background #
-	$bg = 'bg-1.jpg';
+
+	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg', 'bg-4.jpg');
 	$i = rand(0, count($bg)-1);
 	$selectedBg = "$bg[$i]";
 
@@ -92,8 +93,8 @@
 	<body>
 		<div class="bg">
 <!-- Login -->
-			<div class="jumbotron login" id="login">
-				<img src="images/logo.png" alt="Logo" width="225" height="54">
+			<div class="jumbotron login" id="login" style="background-color: #1ca382;">
+				<img src="img/Astrum.png" alt="Logo" width="225" height="54">
 				<form method="POST" action="">
 					<div class="form-group ">
 						<label class="control-label " for="gebruikersnaam">
