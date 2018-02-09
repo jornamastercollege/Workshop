@@ -85,6 +85,7 @@
 				background-position: center;
 				background-repeat: no-repeat;
 				background-size: cover;
+				background-color: #333e42;
 				position: fixed;
 			}
 		</style>
