@@ -1,10 +1,10 @@
 <?php
 # Includes #
 	session_start();
-	include 'includes/db.php';
+//	include 'includes/db.php';
 	
 # Background #
-	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg', 'bg-4.jpg', 'bg-5.jpg', 'bg-6.jpg');
+	$bg = '/img/bg-1.jpg';
 	$i = rand(0, count($bg)-1);
 	$selectedBg = "$bg[$i]";
 
