@@ -4,6 +4,7 @@
 //	include 'includes/db.php';
 	
 # Background #
+
 	$bg = 'bg-1.jpg';
 	$i = rand(0, count($bg)-1);
 	$selectedBg = "$bg[$i]";
