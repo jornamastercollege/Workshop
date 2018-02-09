@@ -10,7 +10,7 @@ session_start();
 <title>Inlog pagina</title>
 
 <!-- Favicon -->
-<link href="../img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+<link href="../Workshop/img/Astrum_logo.jpg" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 </head>
 <body style="background-color: #333e42">
  <!-- Navbar -->
