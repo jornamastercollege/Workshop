@@ -5,7 +5,7 @@
 	
 # Background #
 
-	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg');
+	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg', 'bg-4.jpg');
 	$i = rand(0, count($bg)-1);
 	$selectedBg = "$bg[$i]";
 
