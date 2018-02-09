@@ -94,7 +94,7 @@
 	<body>
 		<div class="bg">
 <!-- Login -->
-			<div class="jumbotron login" id="login" style="background-color: #333e42;">
+			<div class="jumbotron login" id="login" style="background-color: #1ca382;">
 				<img src="img/Astrum.png" alt="Logo" width="225" height="54">
 				<form method="POST" action="">
 					<div class="form-group ">
