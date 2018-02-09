@@ -19,7 +19,7 @@ session_start();
 				<span class="navbar-toggler-icon" />
             </button>
             <a class="navbar-brand">
-				<img src=".../img/Astrum.png" width="150" height="36" class="d-inline-block align-top" alt="aaaaaa">
+				<img src="../img/Astrum.png" width="150" height="36" class="d-inline-block align-top" alt="aaaaaa">
             </a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
