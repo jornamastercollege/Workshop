@@ -1,11 +1,8 @@
 <?php
-	$hostname = "http://www.imreboersma.nl";
+	$hostname = "imreboersma.nl";
 	$database = "imrebzb198_Workshopinschrijving";
 	$username = "imrebzb198_workshop";
 	$password = "Webmaster2018";
 	date_default_timezone_set('Europe/Amsterdam');
 	$PM = mysqli_connect($hostname, $username, $password);
-	if (!$PM) {
-		trigger_error(mysqli_error($PM),E_USER_ERROR); 
-	}
 ?>
