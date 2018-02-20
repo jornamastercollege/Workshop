@@ -18,6 +18,7 @@ session_start();
         </head>
 
         <body style="background-color: #333e42">
+        
             <!-- Navbar -->
             <nav class="navbar navbar-light navbar-toggleable-md" style="background-color: #1ca382">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
