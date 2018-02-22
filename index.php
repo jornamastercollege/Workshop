@@ -2,7 +2,8 @@
 # Includes #
 	session_start();
 	include 'includes/db.php';
-	
+	echo $userName;
+	echo $userPass;
 //	display_errors("1");
 error_reporting(E_ERROR | E_PARSE);
 # Background #
@@ -17,6 +18,7 @@ error_reporting(E_ERROR | E_PARSE);
 		$userName = mysqli_real_escape_string($PM, $_POST['gebruikersnaam']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
 		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
+		$sql_docent = "SELECT * FROM leider WHERE Voornaam = '$userName' AND Wachtwoord = '$userPass'";
 
 		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);
