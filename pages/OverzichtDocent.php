@@ -1,6 +1,7 @@
 <?php
-//include '../includes/db.php';
+include '../includes/db.php';
 session_start();
+$Username = "Gebruiker";
 ?>
     <html>
 
@@ -13,7 +14,7 @@ session_start();
 
         <head>
             <!-- Favicon -->
-            <link href="../Workshop/img/Astrum_logo.jpg" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+            <link href="../Workshop/img/Astrum_logo.jpg" rel="shortcut icon" type="image/vnd.microsoft.icon" style="background: #fff" />
         </head>
 
         <body style="background-color: #333e42">
@@ -28,25 +29,17 @@ session_start();
                     <img src="../img/Astrum.png" width="150" height="36" class="d-inline-block align-top" alt="aaaaaa">
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-                    <form class="form-inline" method="post">
-                        <label class="sr-only" for="inlineFormInput">E-mail</label>
-                        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="E-mail" name="emaillog">
-
-                        <label class="sr-only" for="inlineFormInputGroup">Wachtwoord</label>
-                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <input type="password" class="form-control" id="inlineFormInputGroup" placeholder="Wachtwoord" name="passwordlog">
-                        </div>
-
-                        <span class="nav-link"> </span>
-
-                        <input type="submit" name="log" class="btn btn-outline-secondary my-2 my-sm-0" value="Aanmelden" style="color: white;" />
-
-                    </form>
+                    <ul class="navbar-nav mr-auto"></ul>
+                    <h4>Welkom <?php echo $_SESSION["login_user"]; ?>&nbsp;</h4>
+                    <button class="btn btn-secondary">Uitloggen</button>
                 </div>
             </nav>
+            <div class="container" style="background-color: white;">
+                <div class="row">
+                    <div class="col-md-3 ">
+                    
+                    </div>
+                </div>
+            </div>
         </body>
-
     </html>
