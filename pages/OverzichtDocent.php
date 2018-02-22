@@ -2,6 +2,9 @@
 include '../includes/db.php';
 session_start();
 $Username = "Gebruiker";
+
+error_reporting(E_ERROR | E_PARSE);
+
 ?>
     <html>
 
