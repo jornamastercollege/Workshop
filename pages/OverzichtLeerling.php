@@ -7,6 +7,7 @@ session_start();
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
             crossorigin="anonymous">
+        <script src="../includes/jquery.js" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
         <title>Inlog pagina</title>
@@ -17,7 +18,7 @@ session_start();
         </head>
 
         <body style="background-color: #333e42">
-        
+
             <!-- Navbar -->
             <nav class="navbar navbar-light navbar-toggleable-md" style="background-color: #1ca382">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -29,24 +30,27 @@ session_start();
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-
                     </ul>
-                    <form class="form-inline" method="post">
-                        <label class="sr-only" for="inlineFormInput">E-mail</label>
-                        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="E-mail" name="emaillog">
-
-                        <label class="sr-only" for="inlineFormInputGroup">Wachtwoord</label>
-                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <input type="password" class="form-control" id="inlineFormInputGroup" placeholder="Wachtwoord" name="passwordlog">
-                        </div>
-
-                        <span class="nav-link"> </span>
-
-                        <input type="submit" name="log" class="btn btn-outline-secondary my-2 my-sm-0" value="Aanmelden" style="color: white;" />
-
-                    </form>
+                    
                 </div>
             </nav>
+
+            <div class="container" style="background-color: #fff">
+                <br>
+                <br>
+                <br>
+
+                <h3 style="text-align: center;"> Overzicht voor leerlingen </h3>
+                <i>
+                    <h5 style="text-align: center;"> Welkom.
+                    </h5>
+                </i>
+
+                <br>
+                <br>
+                <br>
+            </div>
+
         </body>
 
     </html>
