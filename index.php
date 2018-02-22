@@ -39,15 +39,12 @@
 			$_SESSION['ID'] = $id;
 
 
-			if ($rol == "Beheerder") {
-				header("location: pages/ureninvoering.php");
+			if ($rol == "Leerling") {
+				header("location: pages/Overzicht.php");
 			}
-			if ($rol == "Planner") {
-				header("location: pages/ureninvoering.php");
+			if ($rol == "Docent") {
+				header("location: pages/Overzicht.php");
 			}
-			if ($rol == "Ontwikkelaar") {
-				header("location: pages/ureninvoering.php");
-			}			
 		}
 
 		else
@@ -75,7 +72,7 @@
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- Favicon -->
-		<link href="http://groomecs.com/2013/templates/beez_20/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+		<link href="" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<style type="text/css" media="screen">
 			body {
 				background: url(img/<?php echo $selectedBg; ?>) no-repeat;
