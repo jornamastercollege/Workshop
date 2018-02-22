@@ -14,7 +14,7 @@
 	{
 		$userName = mysqli_real_escape_string($PM, $_POST['gebruikersnaam']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
-		$sql = "SELECT * FROM student WHERE studentnmr = '$userName' AND Wachtwoord = '$userPass'";
+		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
 
 		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);
