@@ -3,6 +3,8 @@
 	session_start();
 	include 'includes/db.php';
 	
+//	display_errors("1");
+error_reporting(E_ERROR | E_PARSE);
 # Background #
 
 	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg', 'bg-4.jpg');
@@ -40,11 +42,12 @@
 
 
 			if ($rol == "Leerling") {
-				header("location: pages/Overzicht.php");
+				header("location: pages/OverzichtLeerling.php");
 			}
 			if ($rol == "Docent") {
-				header("location: pages/Overzicht.php");
+				header("location: pages/OverzichtDocent.php");
 			}
+			header("location: pages/OverzichtLeerling.php");
 		}
 
 		else
@@ -72,7 +75,7 @@
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- Favicon -->
-		<link href="" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+		<link href="./img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<style type="text/css" media="screen">
 			body {
 				background: url(img/<?php echo $selectedBg; ?>) no-repeat;
@@ -121,10 +124,7 @@
 					<div class="form-group">
 						<div>
 							<div class="checkbox">
-								<label class="checkbox">
-									<input name="checkbox" type="checkbox" value="Remember me?"/>
-									Onthoud mij?
-								</label>
+								<p>Nog geen account? <a href="./pages/register.php"> Registreer hier! </a> </p>
 							</div>
 						</div>
 					</div>
