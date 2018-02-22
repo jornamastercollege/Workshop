@@ -100,7 +100,23 @@ error_reporting(E_ERROR | E_PARSE);
 					<div class="form-group ">
 						<label class="control-label " for="gebruikersnaam">
 							Gebruikersnaam:
-						</label>
+                        </label>
+                        <div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-user">
+								</i>
+							</div>
+							<input class="form-control" id="Voornaam" name="Voornaam" placeholder="Uw Voornaam..." type="text" required/>
+						</div>
+                    </div>
+                    <div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-user">
+								</i>
+							</div>
+							<input class="form-control" id="Achternaam" name="Achternaam" placeholder="Uw Achternaam..." type="text" required/>
+						</div>
+					</div>
 						<div class="input-group">
 							<div class="input-group-addon">
 								<i class="fa fa-user">
