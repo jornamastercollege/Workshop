@@ -39,8 +39,9 @@ error_reporting(E_ERROR | E_PARSE);
             </nav>
             <div class="container" style="background-color: white;">
                 <div class="row">
-                    <div class="col-md-3 ">
-                    
+                    <div class="col-md-3 align-self-end" align="right">
+                    </br>
+                        <input type="search" class="form-control">
                     </div>
                 </div>
             </div>
