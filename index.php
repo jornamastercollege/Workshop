@@ -5,7 +5,6 @@
 	
 //	display_errors("1");
 error_reporting(E_ERROR | E_PARSE);
-
 # Background #
 
 	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg', 'bg-4.jpg');
