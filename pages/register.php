@@ -1,7 +1,7 @@
 <?php
 # Includes #
 	session_start();
-	include './includes/db.php';
+	include '../includes/db.php';
 //	display_errors("1");
 error_reporting(E_ERROR | E_PARSE);
 # Background #
