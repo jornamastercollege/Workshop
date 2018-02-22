@@ -3,7 +3,7 @@
 	session_start();
 	include 'includes/db.php';
 	
-	display_errors("1");
+//	display_errors("1");
 # Background #
 
 	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg', 'bg-4.jpg');
