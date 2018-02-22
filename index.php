@@ -75,7 +75,7 @@ error_reporting(E_ERROR | E_PARSE);
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- Favicon -->
-		<link href="" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+		<link href="/img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<style type="text/css" media="screen">
 			body {
 				background: url(img/<?php echo $selectedBg; ?>) no-repeat;
