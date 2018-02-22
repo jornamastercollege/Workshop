@@ -29,7 +29,7 @@ error_reporting(E_ERROR | E_PARSE);
 		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 		$count = mysqli_num_rows($result);
 		$rol = $row['Rol'];
-		$naam = $row['Naam'];
+		$naam = $row['Voornaam'];
 		$id = $row['ID'];
 
 		if($count == 1)
