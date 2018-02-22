@@ -42,11 +42,12 @@ error_reporting(E_ERROR | E_PARSE);
 
 
 			if ($rol == "Leerling") {
-				header("location: pages/Overzicht.php");
+				header("location: pages/OverzichtLeerling.php");
 			}
 			if ($rol == "Docent") {
-				header("location: pages/Overzicht.php");
+				header("location: pages/OverzichtDocent.php");
 			}
+			header("location: pages/OverzichtLeerling.php");
 		}
 
 		else
