@@ -33,7 +33,7 @@ error_reporting(E_ERROR | E_PARSE);
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto"></ul>
-                    <h4>Welkom <?php echo $_SESSION["login_user"]; ?>&nbsp;</h4>
+                    <h4>Welkom <?php echo $_SESSION["login_naam"]; ?>&nbsp;</h4>
                     <button class="btn btn-secondary">Uitloggen</button>
                 </div>
             </nav>
