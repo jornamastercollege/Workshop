@@ -2,8 +2,6 @@
 # Includes #
 	session_start();
 	include 'includes/db.php';
-	echo $userName;
-	echo $userPass;
 //	display_errors("1");
 error_reporting(E_ERROR | E_PARSE);
 # Background #
