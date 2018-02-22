@@ -16,7 +16,7 @@
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
 		$sql = "SELECT * FROM PM_Medewerkers WHERE Gebruikersnaam = '$userName' AND Wachtwoord = '$userPass'";
 
-		mysqli_select_db($PM, $database_PM);
+		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);
 		if (!$result)
 		{
