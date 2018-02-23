@@ -37,7 +37,7 @@ error_reporting(E_ERROR | E_PARSE);
 		
 			$_SESSION['Beheerder']  = $rol;
 			$_SESSION['login_user'] = $userName;
-			$_SESSION['login_naam'] = $naam;
+			$_SESSION['login_naam'] = $FirstName;
 			$_SESSION['logged'] = true;
 			$_SESSION['ID'] = $id;
 
@@ -115,7 +115,7 @@ error_reporting(E_ERROR | E_PARSE);
 								<i class="fa fa-user">
 								</i>
 							</div>
-							<input class="form-control" id="wachtwoord" name="Leerlingnummer" placeholder="Uw Leerlingnummer..." type="text" required/>
+							<input class="form-control" id="wachtwoord" name="Leerlingnummer" placeholder="Uw Leerlingnummer..." type="number" required/>
 						</div>
 					</div>
 					<div class="form-group ">
