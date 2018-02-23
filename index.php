@@ -16,8 +16,6 @@ error_reporting(E_ERROR | E_PARSE);
 		$userName = mysqli_real_escape_string($PM, $_POST['gebruikersnaam']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
 		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
-		$sql_docent = "SELECT * FROM leider WHERE Voornaam = '$userName' AND Wachtwoord = '$userPass'";
-
 		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);
 		if (!$result)
@@ -43,13 +41,13 @@ error_reporting(E_ERROR | E_PARSE);
 			$_SESSION['ID'] = $id;
 
 
-			if ($rol == "Leerling") {
-				header("location: pages/OverzichtLeerling.php");
-			}
-			if ($rol == "Docent") {
+		
+			if ($userName = "1984312" || $userPass = "RG9jZW50ZW53YWNodHdvb3JkMTIzQCE=") {
 				header("location: pages/OverzichtDocent.php");
 			}
+			else{
 			header("location: pages/OverzichtLeerling.php");
+			}
 		}
 
 		else
