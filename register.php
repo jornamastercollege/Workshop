@@ -13,7 +13,9 @@ error_reporting(E_ERROR | E_PARSE);
 # Login #
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-		$userName = mysqli_real_escape_string($PM, $_POST['gebruikersnaam']);
+		$FirstName = mysqli_real_escape_string($PM, $_POST['Voornaam']);
+		$LastName = mysqli_real_escape_string($PM, $_POST['Achternaam']);
+		$userName = mysqli_real_escape_string($PM, $_POST['leerlingnummer']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
 		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
 		$sql_docent = "SELECT * FROM leider WHERE Voornaam = '$userName' AND Wachtwoord = '$userPass'";
