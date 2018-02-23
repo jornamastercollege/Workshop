@@ -133,7 +133,7 @@ error_reporting(E_ERROR | E_PARSE);
 					<div class="form-group">
 						<div>
 							<div class="checkbox">
-								<p><a href="index.php"> Terug naar inlog pagina! </a> </p>
+								<p><a href="index.php" style="color: #cfde00;"> Terug naar inlog pagina! </a> </p>
 							</div>
 						</div>
 					</div>
