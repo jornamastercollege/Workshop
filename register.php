@@ -99,7 +99,7 @@ error_reporting(E_ERROR | E_PARSE);
 				<form method="POST" action="">
 					<div class="form-group ">
 						<label class="control-label " for="gebruikersnaam">
-							Gebruikersnaam:
+							Voornaam:
                         </label>
                         <div class="input-group">
 							<div class="input-group-addon">
@@ -111,26 +111,26 @@ error_reporting(E_ERROR | E_PARSE);
                     </div>
 					<div class="form-group ">
 						<label class="control-label " for="wachtwoord">
-							Wachtwoord:
+							Achternaam:
 						</label>
 						<div class="input-group">
 							<div class="input-group-addon">
 								<i class="fa fa-asterisk">
 								</i>
 							</div>
-							<input class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord..." type="password" required/>
+							<input class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord..." type="text" required/>
 						</div>
 					</div>
 					<div class="form-group ">
 						<label class="control-label " for="wachtwoord">
-							Wachtwoord:
+							Leerlingnummer:
 						</label>
 						<div class="input-group">
 							<div class="input-group-addon">
 								<i class="fa fa-asterisk">
 								</i>
 							</div>
-							<input class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord..." type="password" required/>
+							<input class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord..." type="text" required/>
 						</div>
 					</div>
 					<div class="form-group ">
@@ -155,7 +155,7 @@ error_reporting(E_ERROR | E_PARSE);
 					<div class="form-group">
 						<div>
 							<button class="btn btn-primary" name="submit" type="submit" style="background-color: #333e42;">
-							Login
+							Registreer
 							</button>
 						</div>
 					</div>
