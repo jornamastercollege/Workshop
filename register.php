@@ -23,8 +23,8 @@ error_reporting(E_ERROR | E_PARSE);
 		if (!$result)
 		{
 			printf("Error: %s\n", mysqli_error($PM));
-			echo $FirstName
-			"<br>
+			echo "$FirstName
+			<br>
 			$LastName
 			<br>
 			$userName
