@@ -1,69 +1,54 @@
 <?php
 # Includes #
 	session_start();
-	include '../includes/db.php';
+	include './includes/db.php';
 //	display_errors("1");
 error_reporting(E_ERROR | E_PARSE);
 # Background #
 
-	$bg = array('./bg-1.jpg', './bg-2.jpg', './bg-3.jpg', './bg-4.jpg');
+	$bg = array('bg-1.jpg', 'bg-2.jpg', 'bg-3.jpg', 'bg-4.jpg');
 	$i = rand(0, count($bg)-1);
 	$selectedBg = "$bg[$i]";
 
-# Login #
+# Register #
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
-		$userName = mysqli_real_escape_string($PM, $_POST['gebruikersnaam']);
+		$FirstName = mysqli_real_escape_string($PM, $_POST['Voornaam']);
+		$LastName = mysqli_real_escape_string($PM, $_POST['Achternaam']);
+		$userName = mysqli_real_escape_string($PM, $_POST['Leerlingnummer']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
-		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
-		$sql_docent = "SELECT * FROM leider WHERE Voornaam = '$userName' AND Wachtwoord = '$userPass'";
-
+		$sql = "INSERT INTO student (StudentNr, Wachtwoord, Voornaam, Achternaam) VALUES ('$userName', '$userPass', '$FirstName', '$LastName')";
 		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);
 		if (!$result)
 		{
 			printf("Error: %s\n", mysqli_error($PM));
+			echo "$FirstName
+			<br>
+			$LastName
+			<br>
+			$userName
+			<br>
+			$userPass";
 			exit();
 		}
 
-		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-		$count = mysqli_num_rows($result);
-		$rol = $row['Rol'];
-		$naam = $row['Voornaam'];
-		$id = $row['ID'];
-
-		if($count == 1)
-		{
+		
+		
 			$_SESSION['Beheerder']  = $rol;
 			$_SESSION['login_user'] = $userName;
-			$_SESSION['login_naam'] = $naam;
+			$_SESSION['login_naam'] = $FirstName;
 			$_SESSION['logged'] = true;
 			$_SESSION['ID'] = $id;
 
-
-			if ($rol == "Leerling") {
-				header("location: pages/OverzichtLeerling.php");
-			}
-			if ($rol == "Docent") {
-				header("location: pages/OverzichtDocent.php");
-			}
 			header("location: pages/OverzichtLeerling.php");
-		}
-
-		else
-		{
-				echo "
-					<div class='wrong jumbotron'>
-						De gebruikersnaam of het wachtwoord wat u heeft ingevuld is niet correct!
-					</div>	
-				";
-		}
+		
 	}
 ?>
 <!DOCTYPE html>
 <html lang="nl">
 	<head>
-		<title>Log in</title>
+		<title>Registratie</title>
 		
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -75,7 +60,7 @@ error_reporting(E_ERROR | E_PARSE);
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 		<!-- Favicon -->
-		<link href="../img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+		<link href="./img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 		<style type="text/css" media="screen">
 			body {
 				background: url(img/<?php echo $selectedBg; ?>) no-repeat;
@@ -99,7 +84,7 @@ error_reporting(E_ERROR | E_PARSE);
 				<form method="POST" action="">
 					<div class="form-group ">
 						<label class="control-label " for="gebruikersnaam">
-							Gebruikersnaam:
+							Voornaam:
                         </label>
                         <div class="input-group">
 							<div class="input-group-addon">
@@ -109,20 +94,28 @@ error_reporting(E_ERROR | E_PARSE);
 							<input class="form-control" id="Voornaam" name="Voornaam" placeholder="Uw Voornaam..." type="text" required/>
 						</div>
                     </div>
-                    <div class="input-group">
-							<div class="input-group-addon">
-								<i class="fa fa-user">
-								</i>
-							</div>
-							<input class="form-control" id="Achternaam" name="Achternaam" placeholder="Uw Achternaam..." type="text" required/>
-						</div>
-					</div>
+					<div class="form-group ">
+						<label class="control-label " for="wachtwoord">
+							Achternaam:
+						</label>
 						<div class="input-group">
 							<div class="input-group-addon">
 								<i class="fa fa-user">
 								</i>
 							</div>
-							<input class="form-control" id="gebruikersnaam" name="gebruikersnaam" placeholder="Uw gebruikersnaam..." type="text" required/>
+							<input class="form-control" id="wachtwoord" name="Achternaam" placeholder="Uw Achternaam..." type="text" required/>
+						</div>
+					</div>
+					<div class="form-group ">
+						<label class="control-label " for="wachtwoord">
+							Leerlingnummer:
+						</label>
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-user">
+								</i>
+							</div>
+							<input class="form-control" id="wachtwoord" name="Leerlingnummer" placeholder="Uw Leerlingnummer..." type="number" required/>
 						</div>
 					</div>
 					<div class="form-group ">
@@ -140,14 +133,14 @@ error_reporting(E_ERROR | E_PARSE);
 					<div class="form-group">
 						<div>
 							<div class="checkbox">
-								<p>Nog geen account? <a href="./pages/register.php"> Registreer hier! </a> </p>
+								<p><a href="index.php" style="color: #cfde00;"> Terug naar inlog pagina! </a> </p>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div>
 							<button class="btn btn-primary" name="submit" type="submit" style="background-color: #333e42;">
-							Login
+							Registreer
 							</button>
 						</div>
 					</div>
