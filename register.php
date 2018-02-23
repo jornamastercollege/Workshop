@@ -65,7 +65,7 @@ error_reporting(E_ERROR | E_PARSE);
 <!DOCTYPE html>
 <html lang="nl">
 	<head>
-		<title>Log in</title>
+		<title>Registratie</title>
 		
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
