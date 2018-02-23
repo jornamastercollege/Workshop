@@ -15,7 +15,7 @@ error_reporting(E_ERROR | E_PARSE);
 	{
 		$FirstName = mysqli_real_escape_string($PM, $_POST['Voornaam']);
 		$LastName = mysqli_real_escape_string($PM, $_POST['Achternaam']);
-		$userName = mysqli_real_escape_string($PM, $_POST['leerlingnummer']);
+		$userName = mysqli_real_escape_string($PM, $_POST['Leerlingnummer']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
 		$sql = "INSERT INTO student (StudentNr, Wachtwoord, Voornaam, Achternaam) VALUES ('$userName', '$userPass', '$FirstName', '$LastName')";
 		mysqli_select_db($PM, $database);
