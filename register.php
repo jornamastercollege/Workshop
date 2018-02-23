@@ -118,7 +118,7 @@ error_reporting(E_ERROR | E_PARSE);
 								<i class="fa fa-asterisk">
 								</i>
 							</div>
-							<input class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord..." type="text" required/>
+							<input class="form-control" id="wachtwoord" name="Achternaam" placeholder="Uw Achternaam..." type="text" required/>
 						</div>
 					</div>
 					<div class="form-group ">
@@ -130,7 +130,7 @@ error_reporting(E_ERROR | E_PARSE);
 								<i class="fa fa-asterisk">
 								</i>
 							</div>
-							<input class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord..." type="text" required/>
+							<input class="form-control" id="wachtwoord" name="Leerlingnummer" placeholder="Uw Leerlingnummer..." type="text" required/>
 						</div>
 					</div>
 					<div class="form-group ">
@@ -143,13 +143,6 @@ error_reporting(E_ERROR | E_PARSE);
 								</i>
 							</div>
 							<input class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Uw wachtwoord..." type="password" required/>
-						</div>
-					</div>
-					<div class="form-group">
-						<div>
-							<div class="checkbox">
-								<p>Nog geen account? <a href="./pages/register.php"> Registreer hier! </a> </p>
-							</div>
 						</div>
 					</div>
 					<div class="form-group">
