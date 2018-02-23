@@ -13,7 +13,7 @@ error_reporting(E_ERROR | E_PARSE);
             crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
-        <title>Inlog pagina</title>
+        <title>Leerling overzicht</title>
 
         <head>
             <!-- Favicon -->
@@ -34,15 +34,40 @@ error_reporting(E_ERROR | E_PARSE);
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto"></ul>
                     <h4>Welkom <?php echo $_SESSION["login_naam"]; ?>&nbsp;</h4>
-                    <button class="btn btn-secondary">Uitloggen</button>
+                    <button class="btn btn-secondary"><a href="../includes/logout.php">Uitloggen</a></button>
                 </div>
             </nav>
             <div class="container" style="background-color: white;">
                 <div class="row">
                     <div class="col-md-3 align-self-end" align="right">
                     </br>
-                        <input type="search" class="form-control">
+                        <!--<input type="search" class="form-control" placeholder="Search...">-->
                     </div>
+                </div>
+                <div class="row">
+                    <caption>
+                        Inschrijvingen:
+                    </caption>
+                    <table class="table table-responsive ">
+                    
+                        <thead>
+                            <th>Workshop</th>
+                            <th>Ronde</th>
+                            <th>Aanvangstijd</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Waterpolo</td>
+                                <td>1</td>
+                                <td>12.30u</td>
+                            </tr>
+                            <tr>
+                                <td>Voetbal</td>
+                                <td>2</td>
+                                <td>13.45u</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </body>
