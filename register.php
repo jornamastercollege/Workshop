@@ -17,9 +17,7 @@ error_reporting(E_ERROR | E_PARSE);
 		$LastName = mysqli_real_escape_string($PM, $_POST['Achternaam']);
 		$userName = mysqli_real_escape_string($PM, $_POST['leerlingnummer']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
-		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
-		$sql_docent = "SELECT * FROM leider WHERE Voornaam = '$userName' AND Wachtwoord = '$userPass'";
-
+		$sql = "INSERT INTO student (StudentNr, Wachtwoord, Voornaam, Achternaam) VALUES ('$userName', '$userPass', '$FirstName', '$LastName')";
 		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);
 		if (!$result)
@@ -28,38 +26,16 @@ error_reporting(E_ERROR | E_PARSE);
 			exit();
 		}
 
-		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-		$count = mysqli_num_rows($result);
-		$rol = $row['Rol'];
-		$naam = $row['Voornaam'];
-		$id = $row['ID'];
-
-		if($count == 1)
-		{
+		
+		
 			$_SESSION['Beheerder']  = $rol;
 			$_SESSION['login_user'] = $userName;
 			$_SESSION['login_naam'] = $naam;
 			$_SESSION['logged'] = true;
 			$_SESSION['ID'] = $id;
 
-
-			if ($rol == "Leerling") {
-				header("location: pages/OverzichtLeerling.php");
-			}
-			if ($rol == "Docent") {
-				header("location: pages/OverzichtDocent.php");
-			}
 			header("location: pages/OverzichtLeerling.php");
-		}
-
-		else
-		{
-				echo "
-					<div class='wrong jumbotron'>
-						De gebruikersnaam of het wachtwoord wat u heeft ingevuld is niet correct!
-					</div>	
-				";
-		}
+		
 	}
 ?>
 <!DOCTYPE html>
