@@ -101,14 +101,14 @@ error_reporting(E_ERROR | E_PARSE);
 				<form method="POST" action="">
 					<div class="form-group ">
 						<label class="control-label " for="gebruikersnaam">
-							Gebruikersnaam:
+							Leerlingnummer:
 						</label>
 						<div class="input-group">
 							<div class="input-group-addon">
 								<i class="fa fa-user">
 								</i>
 							</div>
-							<input class="form-control" id="gebruikersnaam" name="gebruikersnaam" placeholder="Uw gebruikersnaam..." type="text" required/>
+							<input class="form-control" id="gebruikersnaam" name="gebruikersnaam" placeholder="Uw Leerlingnummer..." type="text" required/>
 						</div>
 					</div>
 					<div class="form-group ">
