@@ -10,7 +10,7 @@ error_reporting(E_ERROR | E_PARSE);
 	$i = rand(0, count($bg)-1);
 	$selectedBg = "$bg[$i]";
 
-# Login #
+# Register #
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
 		$FirstName = mysqli_real_escape_string($PM, $_POST['Voornaam']);
