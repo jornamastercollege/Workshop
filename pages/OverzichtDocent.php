@@ -3,7 +3,6 @@ include '../includes/db.php';
 session_start();
 $Username = "Gebruiker";
 
-error_reporting(E_ERROR | E_PARSE);
 
 ?>
     <html>
@@ -45,27 +44,27 @@ error_reporting(E_ERROR | E_PARSE);
                     </div>
                 </div>
                 <div class="row">
-                    <caption>
-                        Inschrijvingen:
-                    </caption>
-                    <table class="table table-responsive ">
-                    
+                    <table class="table table-responsive col-md-12 table-striped">
                         <thead>
+                            <th>Leerling</th>
                             <th>Workshop</th>
                             <th>Ronde</th>
-                            <th>Aanvangstijd</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Waterpolo</td>
-                                <td>1</td>
-                                <td>12.30u</td>
-                            </tr>
-                            <tr>
-                                <td>Voetbal</td>
-                                <td>2</td>
-                                <td>13.45u</td>
-                            </tr>
+                            <?php
+                                $sql = "SELECT 'ronde.Nummer' AS Ronde, student.Voornaam AS Voornaam, student.Achternaam AS Achternaam, workshop.Naam AS Workshop, workshopronde.* FROM workshop LEFT JOIN workshopronde ON workshopronde.WorkShopID = workshop.ID LEFT JOIN ronde ON workshopronde.RondeID = ronde.ID LEFT JOIN studentinschrijving ON studentinschrijving.WorkShopRondeID = workshopronde.ID LEFT JOIN student ON studentinschrijving.StudentID = student.ID WHERE studentinschrijving.StudentID IS NOT NULL";
+                                $result = mysqli_query($PM, $sql) or die(mysqli_error());
+                                $row = mysqli_fetch_array($result)
+                                //while($row = mysqli_fetch_array($result)) {
+                            ?>
+                                    <tr>
+                                        <td><? echo $row['Ronde']; ?></td>
+                                        <td><? echo $row['Workshop']; ?></td>
+                                        <td><? echo $row['Voornaam']. $row['Achternaam']; ?></td>
+                                    </tr>
+                                    <?php
+                                //}
+                            ?>
                         </tbody>
                     </table>
                 </div>
