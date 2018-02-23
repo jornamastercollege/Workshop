@@ -132,6 +132,13 @@ error_reporting(E_ERROR | E_PARSE);
 					</div>
 					<div class="form-group">
 						<div>
+							<div class="checkbox">
+								<p><a href="index.php"> Terug naar inlog pagina! </a> </p>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div>
 							<button class="btn btn-primary" name="submit" type="submit" style="background-color: #333e42;">
 							Registreer
 							</button>
