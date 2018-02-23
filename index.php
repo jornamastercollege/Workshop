@@ -126,7 +126,7 @@ error_reporting(E_ERROR | E_PARSE);
 					<div class="form-group">
 						<div>
 							<div class="checkbox">
-								<p>Nog geen account? <a href="./pages/register.php"> Registreer hier! </a> </p>
+								<p>Nog geen account? <a href="register.php"> Registreer hier! </a> </p>
 							</div>
 						</div>
 					</div>
