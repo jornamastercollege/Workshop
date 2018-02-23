@@ -100,7 +100,7 @@ error_reporting(E_ERROR | E_PARSE);
 						</label>
 						<div class="input-group">
 							<div class="input-group-addon">
-								<i class="fa fa-asterisk">
+								<i class="fa fa-user">
 								</i>
 							</div>
 							<input class="form-control" id="wachtwoord" name="Achternaam" placeholder="Uw Achternaam..." type="text" required/>
@@ -112,7 +112,7 @@ error_reporting(E_ERROR | E_PARSE);
 						</label>
 						<div class="input-group">
 							<div class="input-group-addon">
-								<i class="fa fa-asterisk">
+								<i class="fa fa-user">
 								</i>
 							</div>
 							<input class="form-control" id="wachtwoord" name="Leerlingnummer" placeholder="Uw Leerlingnummer..." type="text" required/>
