@@ -42,7 +42,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 
 		
-			if ($userName = "1984312" || $userPass = "RG9jZW50ZW53YWNodHdvb3JkMTIzQCE=") {
+			if ($userName === "1984312" || $userPass === "RG9jZW50ZW53YWNodHdvb3JkMTIzQCE=") {
 				header("location: pages/OverzichtDocent.php");
 			}
 			else{
