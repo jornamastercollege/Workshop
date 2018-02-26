@@ -1,6 +1,21 @@
 <?php
-//include '../includes/db.php';
+include '../includes/db.php';
 session_start();
+$Username = "Gebruiker";
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    
+    $wsInput= $_POST["workshopselect"];
+    $studentID = $_SESSION["ID"];
+
+
+    $SQL = "INSERT INTO studentinschrijving (StudentID, WorkShopRondeID) VALUES ("$studentID", "$wsInput") ";
+
+    mysqli_query($PM, $SQL);
+}
+
 ?>
     <html>
 
@@ -37,9 +52,11 @@ session_start();
             </nav>
 
             <div class="container" style="background-color: #fff">
+
                 <br>
                 <br>
                 <br>
+
                 <h3 style="text-align: center;"> Overzicht voor leerlingen </h3>
                 <i>
                     <h5 style="text-align: center;"> Welkom.
@@ -47,74 +64,146 @@ session_start();
                 </i>
                 <br>
 
-                <form class="form-horizontal" action="">
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="email">Activiteit:</label>
-      <div class="col-sm-12">
-        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-2" for="pwd">Password:</label>
-      <div class="col-sm-12">          
-        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
-      </div>
-    </div>
+                <form class="form-horizontal" method="POST">
+                    <div class="form-group col-sm-12">
+                        <label class="control-label col-sm-2">Activiteiten:</label>
+                        <select id="workshopselect" class="form-control">
+                            <option value="0">kies een optie</option>
 
-                 <div class="form-group">        
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Submit</button>
-      </div>
-    </div>
+                            <?php
+                            
+                            $SQL = "SELECT ID, Naam, Omschrijving FROM workshop";
+                            mysqli_select_db($PM, $database);
+                            $result = mysqli_query($PM, $SQL);
+                            while($row = mysqli_fetch_array($result)){
+                             echo "<option value='".$row['ID']."'>".$row['Naam']."</option>";   
+                            }
+                             ?>
+
+                        </select>
+
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label class="control-label col-sm-2">Ronde:</label>
+                        <select class="form-control">
+                            <option value="0">Kies een optie</option>
+
+                            <?php
+                            
+                            $SQL = "SELECT Nummer FROM ronde";
+                            mysqli_select_db($PM, $database);
+                            $result = mysqli_query($PM, $SQL);
+                            while($row = mysqli_fetch_array($result)){
+                             echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";   
+                            }
+                             ?>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group col-sm-offset-2 col-sm-10" action="">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+
+                </form>
 
                 <br>
                 <style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;border-color:#1a9979;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#ffffff;background-color:#1a9979;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#ffffff;background-color:#1a9979;}
-.tg .tg-baqh{text-align:center;vertical-align:top; background-color: #1ca382}
-.tg .tg-mb3i{background-color:#1eae8a;vertical-align:top}
-.tg .tg-lqy6{vertical-align:top}
-.tg .tg-6k2t{background-color:#1eae8a;vertical-align:top}
-.tg .tg-yw4l{vertical-align:top}
-</style>
-<table class="tg col-sm-12">
-  <tr>
-    <th class="tg-baqh" colspan="6">Results</th>
-  </tr>
-  <tr>
-    <td class="tg-6k2t">No</td>
-    <td class="tg-6k2t">Competition</td>
-    <td class="tg-6k2t">John</td>
-    <td class="tg-6k2t">Adam</td>
-    <td class="tg-6k2t">Robert</td>
-    <td class="tg-6k2t">Paul</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">1</td>
-    <td class="tg-yw4l">Swimming</td>
-    <td class="tg-lqy6">1:30</td>
-    <td class="tg-lqy6">2:05</td>
-    <td class="tg-lqy6">1:15</td>
-    <td class="tg-lqy6">1:41</td>
-  </tr>
-  <tr>
-    <td class="tg-6k2t">2</td>
-    <td class="tg-6k2t">Running</td>
-    <td class="tg-mb3i">15:30</td>
-    <td class="tg-mb3i">14:10</td>
-    <td class="tg-mb3i">15:45</td>
-    <td class="tg-mb3i">16:00</td>
-  </tr>
-  <tr>
-    <td class="tg-yw4l">3</td>
-    <td class="tg-yw4l">Shooting</td>
-    <td class="tg-lqy6">70%</td>
-    <td class="tg-lqy6">55%</td>
-    <td class="tg-lqy6">90%</td>
-    <td class="tg-lqy6">88%</td>
-  </tr>
-</table>
+                    .tg {
+                        border-collapse: collapse;
+                        border-spacing: 0;
+                        border-color: #1a9979;
+                    }
+
+                    .tg td {
+                        font-family: Arial, sans-serif;
+                        font-size: 14px;
+                        padding: 10px 5px;
+                        border-style: solid;
+                        border-width: 1px;
+                        overflow: hidden;
+                        word-break: normal;
+                        border-color: #aabcfe;
+                        color: #ffffff;
+                        background-color: #1a9979;
+                    }
+
+                    .tg th {
+                        font-family: Arial, sans-serif;
+                        font-size: 14px;
+                        font-weight: normal;
+                        padding: 10px 5px;
+                        border-style: solid;
+                        border-width: 1px;
+                        overflow: hidden;
+                        word-break: normal;
+                        border-color: #aabcfe;
+                        color: #ffffff;
+                        background-color: #1a9979;
+                    }
+
+                    .tg .tg-baqh {
+                        text-align: center;
+                        vertical-align: top;
+                        background-color: #1ca382
+                    }
+
+                    .tg .tg-mb3i {
+                        background-color: #1eae8a;
+                        vertical-align: top
+                    }
+
+                    .tg .tg-lqy6 {
+                        vertical-align: top
+                    }
+
+                    .tg .tg-6k2t {
+                        background-color: #1eae8a;
+                        vertical-align: top
+                    }
+
+                    .tg .tg-yw4l {
+                        vertical-align: top
+                    }
+                </style>
+                <table class="tg col-sm-12">
+                    <tr>
+                        <th class="tg-baqh" colspan="6">Results</th>
+                    </tr>
+                    <tr>
+                        <td class="tg-6k2t">No</td>
+                        <td class="tg-6k2t">Competition</td>
+                        <td class="tg-6k2t">John</td>
+                        <td class="tg-6k2t">Adam</td>
+                        <td class="tg-6k2t">Robert</td>
+                        <td class="tg-6k2t">Paul</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l">1</td>
+                        <td class="tg-yw4l">Swimming</td>
+                        <td class="tg-lqy6">1:30</td>
+                        <td class="tg-lqy6">2:05</td>
+                        <td class="tg-lqy6">1:15</td>
+                        <td class="tg-lqy6">1:41</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-6k2t">2</td>
+                        <td class="tg-6k2t">Running</td>
+                        <td class="tg-mb3i">15:30</td>
+                        <td class="tg-mb3i">14:10</td>
+                        <td class="tg-mb3i">15:45</td>
+                        <td class="tg-mb3i">16:00</td>
+                    </tr>
+                    <tr>
+                        <td class="tg-yw4l">3</td>
+                        <td class="tg-yw4l">Shooting</td>
+                        <td class="tg-lqy6">70%</td>
+                        <td class="tg-lqy6">55%</td>
+                        <td class="tg-lqy6">90%</td>
+                        <td class="tg-lqy6">88%</td>
+                    </tr>
+                </table>
                 <br>
             </div>
 
