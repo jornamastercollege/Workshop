@@ -2,18 +2,23 @@
 include '../includes/db.php';
 session_start();
 $Username = "Gebruiker";
-
+error_reporting(E_ERROR | E_PARSE);
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    
-    $wsInput= $_POST["workshopselect"];
+    $wsInput = $_POST["workshopselect"];
+    $rInput = $_POST["rondeselect"];
     $studentID = $_SESSION["ID"];
 
+    $SQL = "SELECT * FROM workshopronde WHERE rondeID = $rInput AND workshopID = $wsInput";
+    $result = mysqli_query($PM, $SQL);
+    $row = mysqli_fetch_assoc($result);    
+    $wrID = $row['WorkShopRondeID'];
 
-    $SQL = "INSERT INTO studentinschrijving (StudentID, WorkShopRondeID) VALUES ("$studentID", "$wsInput") ";
-
+    $SQL2 = "INSERT INTO `studentinschrijving`(`StudentID`, `WorkShopRondeID`) VALUES ($studentID, $wrID)";
     mysqli_query($PM, $SQL);
+    echo $SQL;
+
 }
 
 ?>
@@ -64,10 +69,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </i>
                 <br>
 
-                <form class="form-horizontal" method="POST">
+                <form class="form-horizontal" action="" method="POST">
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Activiteiten:</label>
-                        <select id="workshopselect" class="form-control">
+                        <select name="workshopselect" class="form-control">
                             <option value="0">kies een optie</option>
 
                             <?php
@@ -85,7 +90,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Ronde:</label>
-                        <select class="form-control">
+                        <select class="form-control" name="rondeselect">
                             <option value="0">Kies een optie</option>
 
                             <?php

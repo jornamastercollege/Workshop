@@ -2,8 +2,9 @@
 include '../includes/db.php';
 session_start();
 $Username = "Gebruiker";
-
-
+if ($_SESSION['logged'] == false) {
+    echo("<script>location.href='../index.php';</script>");
+}
 ?>
     <html>
 
@@ -14,7 +15,7 @@ $Username = "Gebruiker";
             crossorigin="anonymous"></script>
         <title>Leerling overzicht</title>
 
-        <head>
+        <head> 
             <!-- Favicon -->
             <link href="../Workshop/img/Astrum_logo.jpg" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
         </head>
@@ -40,7 +41,7 @@ $Username = "Gebruiker";
     
     </span>
   </div>
-</nav>
+</nav>  
             <div class="container" style="background-color: white;">
                 <div class="row">
                     <div class="col-md-3 align-self-end" align="right">
@@ -52,7 +53,7 @@ $Username = "Gebruiker";
                             <th>Leerling</th>
                             <th>Workshop</th>
                             <th>Ronde</th>
-                        </thead>
+                        </thead> 
                         <tbody>
                             <?php
                            
