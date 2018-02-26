@@ -33,7 +33,12 @@ error_reporting(E_ERROR | E_PARSE);
 			exit();
 		}
 
-		
+		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
+		mysqli_select_db($PM, $database);
+		$result = mysqli_query($PM, $sql);
+
+		$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+		$id = $row['ID'];
 		
 			$_SESSION['Beheerder']  = $rol;
 			$_SESSION['login_user'] = $userName;
