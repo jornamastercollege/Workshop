@@ -8,7 +8,7 @@
     }
     if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        #Test comment/commit
+        #Andres: ik ga een overzicht maken van de workshops waar leerling ingeschreven staat
 
         $wsInput = $_POST["workshopselect"];
         $rInput = $_POST["rondeselect"];
@@ -24,56 +24,69 @@
     }
 
 ?>
-<html>
+    <html>
+
     <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+            crossorigin="anonymous">
         <script src="../includes/jquery.js" />
         <link href="style.css" />
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <title>HealthEvent - <?php echo $_SESSION['login_naam']; ?></title>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
+        <title>HealthEvent -
+            <?php echo $_SESSION['login_naam']; ?>
+        </title>
         <link href="././img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     </head>
+
     <body style="background-color: #333e42">
 
-            <!-- NAVBAR -->
-            <nav class="navbar navbar-light navbar-toggleable-md" style="background-color: #1ca382">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon" />
-                </button>
-                <a class="navbar-brand">
-                    <img src="../img/Astrum.png" width="150" height="36" class="d-inline-block align-top" alt="Logo">
-                </a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Leerling overzicht <span class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
-                        <p>
-                            Welkom <?php echo $_SESSION["login_naam"]; ?>&nbsp;
-                            <button class="btn btn-secondary" onclick="window.location.href='../Includes/logout.php';" >Loguit</button>
-                        </p>
-                </div>
-            </nav>
-            <!-- ./NAVBAR -->
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-light navbar-toggleable-md" style="background-color: #1ca382">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" />
+            </button>
+            <a class="navbar-brand">
+                <img src="../img/Astrum.png" width="150" height="36" class="d-inline-block align-top" alt="Logo">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Leerling overzicht
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+                <p>
+                    Welkom
+                    <?php echo $_SESSION["login_naam"]; ?>&nbsp;
+                    <button class="btn btn-secondary" onclick="window.location.href='../Includes/logout.php';">Loguit</button>
+                </p>
+            </div>
+        </nav>
+        <!-- ./NAVBAR -->
 
-            <!-- CONTAINER -->
-            <div class="container" style="background-color: #fff">
-                <br><br><br>
+        <!-- CONTAINER -->
+        <div class="container" style="background-color: #fff">
+            <br>
+            <br>
+            <br>
 
-                <h3 style="text-align: center;"> Overzicht voor leerlingen </h3>
-                <i>
-                    <h5 style="text-align: center;"> Welkom <?php echo $_SESSION["login_naam"] ?>!</h5>
-                </i>
-                <br>
+            <h3 style="text-align: center;"> Overzicht voor leerlingen </h3>
+            <i>
+                <h5 style="text-align: center;"> Welkom
+                    <?php echo $_SESSION["login_naam"] ?>!</h5>
+            </i>
+            <br>
 
-                <form class="form-horizontal" action="" method="POST">
+            <form class="form-horizontal" action="" method="POST">
 
-                    <div class="form-group col-sm-12">
-                        <label class="control-label col-sm-2">Activiteiten:</label>
-                        <select name="workshopselect" class="form-control" required="required">
-                            <option value="0" disabled selected>kies een optie</option>
-                            <?php
+                <div class="form-group col-sm-12">
+                    <label class="control-label col-sm-2">Activiteiten:</label>
+                    <select name="workshopselect" class="form-control" required="required">
+                        <option value="0" disabled selected>kies een optie</option>
+                        <?php
                                 $SQL = "SELECT ID, Naam, Omschrijving FROM workshop";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
@@ -81,14 +94,14 @@
                                     echo "<option value='".$row['ID']."'>".$row['Naam']."</option>";   
                                 }
                             ?>
-                        </select>
-                    </div>
+                    </select>
+                </div>
 
-                    <div class="form-group col-sm-12">
-                        <label class="control-label col-sm-2">Ronde:</label>
-                        <select name="rondeselect" class="form-control" required="required">
-                            <option value="0" disabled selected>Kies een optie</option>
-                            <?php
+                <div class="form-group col-sm-12">
+                    <label class="control-label col-sm-2">Ronde:</label>
+                    <select name="rondeselect" class="form-control" required="required">
+                        <option value="0" disabled selected>Kies een optie</option>
+                        <?php
                                 $SQL = "SELECT Nummer, ID FROM ronde";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
@@ -96,15 +109,67 @@
                                     echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";   
                                 }
                             ?>
-                        </select>
-                    </div>
+                    </select>
+                </div>
 
-                    <div class="form-group col-sm-offset-2 col-sm-10">
-                        <input type="submit" class="btn btn-default" name="submit" />
-                    </div>
-                </form>
-                <br/>
-            </div>
-            <!-- ./CONTAINER -->
+                <div class="form-group col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-default" name="submit" />
+                </div>
+            </form>
+            <br/>
+
+            <table style="width:100%;">
+                <label class="control-label col-sm-2">U staat ingeschreven:</label>
+
+                <thead>
+                    <th>Workshop</th>
+                    <th>Ronde</th>
+
+                    <!-- Hier zou ook moeten komen of er nog plek is of niet! -->
+
+                </thead>
+
+                <tbody>
+
+                    <?php
+
+                    $studentID = $_SESSION["ID"];
+
+                    $SQL3 = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`
+                    FROM `workshop`
+                        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+                        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+                        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+                        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+                        WHERE `student`.`ID` = $studentID    
+                ";            
+
+                              
+
+                    $result = mysqli_query($PM, $SQL3) or die(mysqli_error());
+                        while($row = mysqli_fetch_array($result)) {
+                        ?>
+                        
+                        <tr>
+                            <td>
+                                <?php echo $row['naam']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['aanvang']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['nummy']; ?>
+                            </td>
+                        </tr>
+                        <?php
+}
+?>      
+                </tbody>
+
+            </table>
+
+        </div>
+        <!-- ./CONTAINER -->
     </body>
-</html>
+
+    </html>
