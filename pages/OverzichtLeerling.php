@@ -8,6 +8,8 @@
     }
     if($_SERVER["REQUEST_METHOD"] == "POST") {
 
+        #Test comment/commit
+
         $wsInput = $_POST["workshopselect"];
         $rInput = $_POST["rondeselect"];
         $studentID = $_SESSION["ID"];
