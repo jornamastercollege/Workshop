@@ -8,6 +8,7 @@
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
+        #Andres: ik ga een overzicht maken van de workshops waar leerling ingeschreven staat
 
         $wsInput = $_POST["workshopselect"];
         $rInput = $_POST["rondeselect"];
@@ -23,7 +24,8 @@
     }
 
 ?>
-<html>
+    <html>
+
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         
@@ -34,6 +36,7 @@
         <title>HealthEvent - <?php echo $_SESSION['login_naam']; ?></title>
         <link href="././img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     </head>
+
     <body style="background-color: #333e42">
 
             <!-- NAVBAR -->
@@ -63,8 +66,10 @@
                 <br><br><br>
 
                 <h3 style="text-align: center;"> Overzicht voor leerlingen </h3>
-                <i>
+                
                     <h5 style="text-align: center;"> Welkom <?php echo $_SESSION["login_naam"] ?>!</h5>
+                    <i>
+                     <p style="color:red; text-align: center;">Na het inschrijven voor een workshop kan deze niet meer worden aangepast!!</p>
                 </i>
                 <br>
 
@@ -72,7 +77,7 @@
 
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Activiteiten:</label>
-                        <select name="workshopselect" id="workshopselect" class="form-control" required="required">
+                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onselect="loadDoc();">
                             <option value="0" disabled selected>kies een workshop</option>
                             <?php
                                 $SQL = "SELECT ID, Naam, Omschrijving FROM workshop";
@@ -84,6 +89,8 @@
                             ?>
                         </select>
                     </div>
+                    
+                    <div id="workshopoms"></div>
 
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Ronde:</label>
@@ -105,6 +112,55 @@
                     </div>
                 </form>
                 <br/>
+                
+            <table style="width:100%;" class="table">
+                <label class="control-label col-sm-2">U staat ingeschreven:</label>
+                <thead class=" thead-dark">
+                    <th>Workshop</th>
+                    <th>Ronde</th>
+
+                    <!-- Hier zou ook moeten komen of er nog plek is of niet! -->
+
+                </thead>
+
+                <tbody>
+
+                    <?php
+
+                    $studentID = $_SESSION["ID"];
+
+                    $SQL3 = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`
+                    FROM `workshop`
+                        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+                        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+                        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+                        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+                        WHERE `student`.`ID` = $studentID    
+                ";            
+
+                              
+
+                    $result = mysqli_query($PM, $SQL3) or die(mysqli_error());
+                        while($row = mysqli_fetch_array($result)) {
+                        ?>
+                        
+                        <tr>
+                            <td>
+                                <?php echo $row['naam']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['aanvang']; ?>
+                            </td>
+                            <td>
+                                <?php echo $row['nummy']; ?>
+                            </td>
+                        </tr>
+                        <?php
+}
+?>      
+                </tbody>
+
+            </table>
             </div>
             <!-- ./CONTAINER -->
             <?php
@@ -118,7 +174,7 @@
         ?>
         <script>
             rondeselect.disabled = true;
-            workshopselect.diabled = true;
+            workshopselect.disabled = true;
         </script>
         <?php 
     }
@@ -127,7 +183,7 @@
         ?>
         <script>
             rondeselect.disabled = false;
-            workshopselect.diabled = false;
+            workshopselect.disabled = false;
         </script>
         <?php
     }
@@ -135,10 +191,18 @@
         ?>
         <script>
             rondeselect.disabled = false;
-            workshopselect.diabled = false;
+            workshopselect.disabled = false;
         </script>
         <?php
     }
 ?>
+                    </select>
+                </div>
+            </form>
+            <br/>
+        </div>
+        <!-- ./CONTAINER -->
+    
     </body>
-</html>
+
+    </html>
