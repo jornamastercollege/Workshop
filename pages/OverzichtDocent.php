@@ -56,7 +56,7 @@ if ($_SESSION['logged'] == false) {
                         <tbody>
                             <?php
                            
-                                $sql = "SELECT ronde.Nummer AS Ronde, student.Voornaam AS Voornaam, student.Achternaam AS Achternaam, workshop.Naam AS Workshop, workshopronde.* FROM workshop LEFT JOIN workshopronde ON workshopronde.WorkShopID = workshop.ID LEFT JOIN ronde ON workshopronde.RondeID = ronde.ID LEFT JOIN studentinschrijving ON studentinschrijving.WorkShopRondeID = workshopronde.ID LEFT JOIN student ON studentinschrijving.StudentID = student.ID WHERE studentinschrijving.StudentID IS NOT NULL";
+                                $sql = "SELECT ronde.Nummer AS Ronde, student.Voornaam AS Voornaam, student.Achternaam AS Achternaam, workshop.Naam AS Workshop, workshopronde.* FROM workshop LEFT JOIN workshopronde ON workshopronde.WorkShopID = workshop.ID LEFT JOIN ronde ON workshopronde.RondeID = ronde.ID LEFT JOIN studentinschrijving ON studentinschrijving.WorkShopRondeID = workshopronde.ID LEFT JOIN student ON studentinschrijving.StudentID = student.ID WHERE studentinschrijving.StudentID IS NOT NULL ORDER BY Voornaam, Achternaam";
                                 $result = mysqli_query($PM, $sql) or die(mysqli_error());
                                 while($row = mysqli_fetch_array($result)) {
                             ?>

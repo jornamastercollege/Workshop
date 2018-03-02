@@ -6,9 +6,8 @@
     if ($_SESSION['logged'] == false) {
         echo("<script>location.href='../index.php';</script>");
     }
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        #Test comment/commit
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $wsInput = $_POST["workshopselect"];
         $rInput = $_POST["rondeselect"];
@@ -27,8 +26,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <script src="../includes/jquery.js" />
+        
         <link href="style.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.js"></script>
+            <script src="../includes/jquery.js" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <title>HealthEvent - <?php echo $_SESSION['login_naam']; ?></title>
         <link href="././img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
@@ -67,12 +68,12 @@
                 </i>
                 <br>
 
-                <form class="form-horizontal" action="" method="POST">
+                <form class="form-horizontal" action="" method="POST" required>
 
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Activiteiten:</label>
-                        <select name="workshopselect" class="form-control" required="required">
-                            <option value="0" disabled selected>kies een optie</option>
+                        <select name="workshopselect" id="workshopselect" class="form-control" required="required">
+                            <option value="0" disabled selected>kies een workshop</option>
                             <?php
                                 $SQL = "SELECT ID, Naam, Omschrijving FROM workshop";
                                 mysqli_select_db($PM, $database);
@@ -86,8 +87,8 @@
 
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Ronde:</label>
-                        <select name="rondeselect" class="form-control" required="required">
-                            <option value="0" disabled selected>Kies een optie</option>
+                        <select name="rondeselect" id="rondeselect" class="form-control" required="required">
+                            <option value="0" disabled selected>Kies een ronde</option>
                             <?php
                                 $SQL = "SELECT Nummer, ID FROM ronde";
                                 mysqli_select_db($PM, $database);
@@ -106,5 +107,38 @@
                 <br/>
             </div>
             <!-- ./CONTAINER -->
+            <?php
+    $studentID = $_SESSION["ID"];
+    $inschrijving_sql = "SELECT StudentID FROM studentinschrijving WHERE StudentID = $studentID";
+    $inschrijving_result = mysqli_query($PM, $inschrijving_sql);
+    $inschrijving_count = mysqli_num_rows($inschrijving_result);
+
+    if ($inschrijving_count == 2) {
+        //Script voor uitschakelen van invoervelden
+        ?>
+        <script>
+            rondeselect.disabled = true;
+            workshopselect.diabled = true;
+        </script>
+        <?php 
+    }
+    elseif ($inschrijving_count < 2) {
+        //script voor te weinig inschrijvingen
+        ?>
+        <script>
+            rondeselect.disabled = false;
+            workshopselect.diabled = false;
+        </script>
+        <?php
+    }
+    elseif ($inschrijving_count > 2) {
+        ?>
+        <script>
+            rondeselect.disabled = false;
+            workshopselect.diabled = false;
+        </script>
+        <?php
+    }
+?>
     </body>
 </html>
