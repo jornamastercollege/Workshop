@@ -21,6 +21,19 @@
     
         $SQL2 = "INSERT INTO `studentinschrijving`(`StudentID`, `WorkShopRondeID`) VALUES ($studentID, $wrID)";
         mysqli_query($PM, $SQL2);
+
+        $SQL3 = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop WHERE ID = '$wrID'";
+        mysqli_select_db($PM, $database);
+        $result3 = mysqli_query($PM, $SQL3);
+        $row3 = mysqli_fetch_array($result3);
+        $currentaantal = $row3['CurrentDeeln'] + 1;
+        $SQL4 = "UPDATE workshop SET CurrentDeeln = '$currentaantal' WHERE ID = '$wrID'";
+        $result4 = mysqli_query($PM, $SQL4);
+
+        if (!$result4)
+        {
+            echo "ERROR:". mysqli_error($PM);
+        }
     }
 
 ?>
@@ -34,7 +47,7 @@
             <script src="../includes/jquery.js" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <title>HealthEvent - <?php echo $_SESSION['login_naam']; ?></title>
-        <link href="././img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+        <link href="../img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     </head>
 
     <body style="background-color: #333e42">
@@ -80,11 +93,17 @@
                         <select name="workshopselect" id="workshopselect" class="form-control" required="required" onselect="loadDoc();">
                             <option value="0" disabled selected>kies een workshop</option>
                             <?php
-                                $SQL = "SELECT ID, Naam, Omschrijving FROM workshop";
+                                $SQL = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 while($row = mysqli_fetch_array($result)) {
-                                    echo "<option value='".$row['ID']."'>".$row['Naam']."</option>";   
+                                    if ($row['CurrentDeeln'] == $row['MaxDeelnemers'])
+                                    {
+                                        echo "<option value='".$row['ID']."' disabled>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";
+                                    }
+                                    else {
+                                    echo "<option value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
+                                    }
                                 }
                             ?>
                         </select>
@@ -118,6 +137,7 @@
                 <thead class=" thead-dark">
                     <th>Workshop</th>
                     <th>Ronde</th>
+                    <th>Ronde Tijd</th>
 
                     <!-- Hier zou ook moeten komen of er nog plek is of niet! -->
 
@@ -149,10 +169,10 @@
                                 <?php echo $row['naam']; ?>
                             </td>
                             <td>
-                                <?php echo $row['aanvang']; ?>
+                                <?php echo $row['nummy']; ?>
                             </td>
                             <td>
-                                <?php echo $row['nummy']; ?>
+                                <?php echo $row['aanvang']; ?>
                             </td>
                         </tr>
                         <?php
