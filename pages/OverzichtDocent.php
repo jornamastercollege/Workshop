@@ -12,6 +12,8 @@ if ($_SESSION['logged'] == false) {
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
             crossorigin="anonymous">
             <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+            <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+            <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
         <title>HealthEvent - Docent</title>
@@ -53,7 +55,7 @@ if ($_SESSION['logged'] == false) {
             <!-- ./NAVBAR -->
             <div class="container" style="background-color: white;">
                 <div class="row">
-                    <div class="col-md-3 align-self-end" align="right">
+                    <p>Export this to excel:</p> <div class="col-md-2 align-self-end" align="left">
                     <button type="submit" class="btn-primay Download"><i class="fas fa-download"></i> </button>
                     </div>
                 </div>
