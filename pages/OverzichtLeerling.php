@@ -156,11 +156,11 @@
 
        if ($block_row['Workshop'] == $row['ID'])
        {
-        echo "<option value='".$row['ID']."' disabled>".$row['Nummer']."</option>";
+        echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";
        }
        else
        {
-        echo "<option value='".$row['ID']."' disabled>".$row['Nummer']."</option>";
+        echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";
        }
                                 }
                             ?>
