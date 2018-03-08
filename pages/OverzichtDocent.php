@@ -11,11 +11,21 @@ if ($_SESSION['logged'] == false) {
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
             crossorigin="anonymous">
+            <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
         <title>HealthEvent - Docent</title>
             <!-- Favicon -->
-            <link href="././img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+            <link href="../img/Astrum_logo.png" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+            <script type="text/javascript">
+            $(function(){
+            $('.Download').click(function(){
+            var url='data:application/vnd.ms-excel,' + encodeURIComponent($('#tabledownload').html()) 
+            location.href=url
+            return false
+            })
+            })
+        </script>
         </head>
 
         <body style="background-color: #333e42">
@@ -44,9 +54,11 @@ if ($_SESSION['logged'] == false) {
             <div class="container" style="background-color: white;">
                 <div class="row">
                     <div class="col-md-3 align-self-end" align="right">
+                    <button type="submit" class="btn-primay Download"><i class="fas fa-download"></i> </button>
                     </div>
                 </div>
                 <div class="row">
+                <div class="tabledownload">
                     <table class="table table-responsive col-md-12 table-striped">
                         <thead>
                             <th>Leerling</th>
@@ -56,7 +68,14 @@ if ($_SESSION['logged'] == false) {
                         <tbody>
                             <?php
                            
-                                $sql = "SELECT ronde.Nummer AS Ronde, student.Voornaam AS Voornaam, student.Achternaam AS Achternaam, workshop.Naam AS Workshop, workshopronde.* FROM workshop LEFT JOIN workshopronde ON workshopronde.WorkShopID = workshop.ID LEFT JOIN ronde ON workshopronde.RondeID = ronde.ID LEFT JOIN studentinschrijving ON studentinschrijving.WorkShopRondeID = workshopronde.ID LEFT JOIN student ON studentinschrijving.StudentID = student.ID WHERE studentinschrijving.StudentID IS NOT NULL ORDER BY Voornaam, Achternaam";
+                                $sql = "SELECT ronde.Nummer AS Ronde, student.Voornaam AS Voornaam, student.Achternaam AS Achternaam, workshop.Naam AS Workshop, workshopronde.* 
+                                FROM workshop 
+                                LEFT JOIN workshopronde ON workshopronde.WorkShopID = workshop.ID 
+                                LEFT JOIN ronde ON workshopronde.RondeID = ronde.ID 
+                                LEFT JOIN studentinschrijving ON studentinschrijving.WorkShopRondeID = workshopronde.ID 
+                                LEFT JOIN student ON studentinschrijving.StudentID = student.ID 
+                                WHERE studentinschrijving.StudentID IS NOT NULL 
+                                ORDER BY Workshop, Ronde, Voornaam, Achternaam";
                                 $result = mysqli_query($PM, $sql) or die(mysqli_error());
                                 while($row = mysqli_fetch_array($result)) {
                             ?>
@@ -70,6 +89,7 @@ if ($_SESSION['logged'] == false) {
                             ?>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </body>

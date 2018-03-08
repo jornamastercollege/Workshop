@@ -27,7 +27,7 @@
         $result3 = mysqli_query($PM, $SQL3);
         $row3 = mysqli_fetch_array($result3);
         $currentaantal = $row3['CurrentDeeln'] + 1;
-        $SQL4 = "UPDATE workshop SET CurrentDeeln = '$currentaantal' WHERE ID = '$wrID'";
+        $SQL4 = "UPDATE workshop SET CurrentDeeln = '$currentaantal' WHERE ID = '$wsInput'";
         $result4 = mysqli_query($PM, $SQL4);
 
         if (!$result4)
