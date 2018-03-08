@@ -125,7 +125,21 @@
                                     {
                                         echo "<option value='".$row['ID']."' disabled>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";
                                     }
-                                    else {
+                                   
+                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `WorkShopRonde`.`WorkshopID` AS Workshop
+                                    FROM `workshop`
+                                        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+                                        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+                                        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+                                        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+                                        WHERE `student`.`ID` = '$studentID'";
+                                       $block_result = mysqli_query($PM, $block_sql);
+                                       $block_row = mysqli_fetch_array($block_result);
+                                       if ($block_row['Workshop'] == $row['ID'])
+                                       {
+                                        echo "<option disabled value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
+                                       }
+                                        else {
                                     echo "<option value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
                                     }
                                 }
@@ -154,9 +168,9 @@
        $block_result = mysqli_query($PM, $block_sql);
        $block_row = mysqli_fetch_array($block_result);
 
-       if ($block_row['Workshop'] == $row['ID'])
+       if ($block_row['nummy'] == $row['ID'])
        {
-        echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";
+        echo "<option disabled value='".$row['ID']."'>".$row['Nummer']."</option>";
        }
        else
        {
@@ -258,11 +272,6 @@
     }
     
 ?>
- <script type="text/javascript">
-/*var variable = '<?php echo json_encode($block_row['Workshop']); ?>'
-$("select option:contains('Value " + variable + "')").attr("disabled","disabled");
-$("select").prop("selectedIndex",-1) */
-</script>
                     </select>
                 </div>
             </form>
