@@ -2,6 +2,7 @@
     include '../includes/db.php';
     session_start();
     $Username = "Gebruiker";
+    $studentID = $_SESSION["ID"];
     error_reporting(E_ERROR | E_PARSE);
     if ($_SESSION['logged'] == false) {
         echo("<script>location.href='../index.php';</script>");
@@ -36,14 +37,37 @@
         }
     }
 
+ /*   $block_sql = "SELECT * FROM workshopronde, studentinschrijving 
+    WHERE studentinschrijving.StudentID = $studentID 
+    AND studentinschrijving.WorkShopRondeID = WorkshopRonde.ID"; 
+
+    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `WorkShopRonde`.`WorkshopID` AS Workshop
+    FROM `workshop`
+        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+        WHERE `student`.`ID` = '$studentID'";
+       $block_result = mysqli_query($PM, $block_sql);
+
+    if (!$block_result)
+    {
+        echo "Error: ".mysqli_error($PM);
+    }
+   $block_row = mysqli_fetch_array($block_result);
+   
+      echo  $block_row['Workshop']; 
+        $block_row['nummy'];
+   */
+
 ?>
     <html>
 
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        
         <link href="style.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.js"></script>
+        <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
             <script src="../includes/jquery.js" />
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <title>HealthEvent - <?php echo $_SESSION['login_naam']; ?></title>
@@ -93,7 +117,7 @@
                         <select name="workshopselect" id="workshopselect" class="form-control" required="required" onselect="loadDoc();">
                             <option value="0" disabled selected>kies een workshop</option>
                             <?php
-                                $SQL = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop";
+                                $SQL = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop ORDER BY Naam";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 while($row = mysqli_fetch_array($result)) {
@@ -101,7 +125,21 @@
                                     {
                                         echo "<option value='".$row['ID']."' disabled>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";
                                     }
-                                    else {
+                                   
+                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `WorkShopRonde`.`WorkshopID` AS Workshop
+                                    FROM `workshop`
+                                        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+                                        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+                                        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+                                        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+                                        WHERE `student`.`ID` = '$studentID'";
+                                       $block_result = mysqli_query($PM, $block_sql);
+                                       $block_row = mysqli_fetch_array($block_result);
+                                       if ($block_row['Workshop'] == $row['ID'])
+                                       {
+                                        echo "<option disabled value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
+                                       }
+                                        else {
                                     echo "<option value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
                                     }
                                 }
@@ -120,7 +158,24 @@
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 while($row = mysqli_fetch_array($result)) {
-                                    echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";   
+                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `WorkShopRonde`.`WorkshopID` AS Workshop
+    FROM `workshop`
+        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+        WHERE `student`.`ID` = '$studentID'";
+       $block_result = mysqli_query($PM, $block_sql);
+       $block_row = mysqli_fetch_array($block_result);
+
+       if ($block_row['nummy'] == $row['ID'])
+       {
+        echo "<option disabled value='".$row['ID']."'>".$row['Nummer']."</option>";
+       }
+       else
+       {
+        echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";
+       }
                                 }
                             ?>
                         </select>
@@ -147,7 +202,7 @@
 
                     <?php
 
-                    $studentID = $_SESSION["ID"];
+                   
 
                     $SQL3 = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`
                     FROM `workshop`
@@ -215,6 +270,7 @@
         </script>
         <?php
     }
+    
 ?>
                     </select>
                 </div>
