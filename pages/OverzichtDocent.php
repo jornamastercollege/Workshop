@@ -97,7 +97,7 @@ echo $test; */
             <div class="container" style="background-color: white;">
                 <div class="row">
                     <div class="col-md-2 align-self-end" align="left">
-                    <input type="button" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
+                    <input class="btn btn-primary" type="button" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
                         
                     </div>
                 </div>
