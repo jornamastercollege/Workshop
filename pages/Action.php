@@ -1,4 +1,13 @@
 <?php
+ include '../includes/db.php';
+ session_start();
+ $Username = "Gebruiker";
+ $studentID = $_SESSION["ID"];
+ error_reporting(E_ERROR | E_PARSE);
+ if ($_SESSION['logged'] == false) {
+     echo("<script>location.href='../index.php';</script>");
+ }
+
   if($_SERVER["REQUEST_METHOD"] == "POST") {
     #Andres: ik ga een overzicht maken van de workshops waar leerling ingeschreven staat
 
@@ -27,5 +36,5 @@
         echo "ERROR:". mysqli_error($PM);
     }
 }
-header("Location : OverzichtLeerling.php")
+header("Location: OverzichtLeerling.php");
 ?>
