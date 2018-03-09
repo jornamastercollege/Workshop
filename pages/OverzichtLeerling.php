@@ -110,7 +110,7 @@
                 </i>
                 <br>
 
-                <form class="form-horizontal" action="" method="POST" required>
+                <form class="form-horizontal" action="Action.php" method="POST" required>
 
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Activiteiten:</label>
