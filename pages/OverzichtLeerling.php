@@ -114,7 +114,7 @@
 
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Activiteiten:</label>
-                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onselect="loadDoc();">
+                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onselect="loadDoc(); showUser();"; onclick="">
                             <option value="0" disabled selected>kies een workshop</option>
                             <?php
                                 $SQL = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop ORDER BY Naam";
@@ -140,11 +140,17 @@
                                         echo "<option disabled value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
                                        }
                                         else {
-                                    echo "<option value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
+                                            ?>
+                                            <option  value="<?php $row['ID'] ?>"><?php echo $row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers'] ?> </option>";  
+                                            <?php
                                     }
                                 }
                             ?>
                         </select>
+                        <p>omschrijving:</p>
+                        <div id="omschrijving">
+                                
+                        </div>
                     </div>
                     
                     <div id="workshopoms"></div>
@@ -278,7 +284,32 @@
             <br/>
         </div>
         <!-- ./CONTAINER -->
-    
+    <script>
+        function showUser() {
+                var e = document.getElementById("workshopselect");
+                var str = e.options[e.selectedIndex].value;
+                console.log(str);
+				if (str == "") {
+					document.getElementById("omschrijving").innerHTML = "";
+					return;
+				} else {
+                    
+					if (window.XMLHttpRequest) {
+						// code for IE7+, Firefox, Chrome, Opera, Safari
+						xmlhttp = new XMLHttpRequest();
+					} else {
+						xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					xmlhttp.onreadystatechange = function () {
+						if (this.readyState == 4 && this.status == 200) {
+							document.getElementById("omschrijving").innerHTML = this.responseText;
+						}
+					};
+					xmlhttp.open("GET", "getmapnr.php?q=" + str, true);
+					xmlhttp.send();
+				}
+			}
+    </script>
     </body>
 
     </html>
