@@ -108,6 +108,7 @@
                     <i>
                      <p style="color:red; text-align: center;">Na het inschrijven voor een workshop kan deze niet meer worden aangepast!!</p>
                      <p style="color:red; text-align: center;">Je moet je inschrijven voor 2 workshops!</p>
+                     
                 </i>
                 <br>
 
