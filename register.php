@@ -22,15 +22,7 @@ error_reporting(E_ERROR | E_PARSE);
 		$result = mysqli_query($PM, $sql);
 		if (!$result)
 		{
-			printf("Error: %s\n", mysqli_error($PM));
-			echo "$FirstName
-			<br>
-			$LastName
-			<br>
-			$userName
-			<br>
-			$userPass";
-			exit();
+			echo mysqli_error($PM);
 		}
 
 		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";

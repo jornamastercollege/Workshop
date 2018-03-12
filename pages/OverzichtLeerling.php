@@ -27,7 +27,7 @@
         mysqli_select_db($PM, $database);
         $result3 = mysqli_query($PM, $SQL3);
         $row3 = mysqli_fetch_array($result3);
-        $currentaantal = $row3['CurrentDeeln'] + 1;
+        $currentaantal=  $row3['CurrentDeeln'] + 1;
         $SQL4 = "UPDATE workshop SET CurrentDeeln = '$currentaantal' WHERE ID = '$wsInput'";
         $result4 = mysqli_query($PM, $SQL4);
 
@@ -92,7 +92,7 @@
                     </ul>
                         <p>
                             Welkom <?php echo $_SESSION["login_naam"]; ?>&nbsp;
-                            <button class="btn btn-secondary" onclick="window.location.href='../Includes/logout.php';" >Loguit</button>
+                            <button class="btn btn-secondary" onclick="window.location.href='../includes/logout.php';" >Loguit</button>
                         </p>
                 </div>
             </nav>
@@ -107,8 +107,8 @@
                     <h5 style="text-align: center;"> Welkom <?php echo $_SESSION["login_naam"] ?>!</h5>
                     <i>
                      <p style="color:red; text-align: center;">Na het inschrijven voor een workshop kan deze niet meer worden aangepast!!</p>
-                     <p style="color:red; text-align: center;">Je moet je inschrijven voor 2 workshops!</p>
-
+                     <p style="color:red; text-align: center;">Je <u><b>moet</b></u> je inschrijven voor 2 workshops!</p>
+                     
                 </i>
                 <br>
 
@@ -116,7 +116,7 @@
 
                     <div class="form-group col-sm-12">
                         <label class="control-label col-sm-2">Activiteiten:</label>
-                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onselect="loadDoc();">
+                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
                             <option value="0" disabled selected>kies een workshop</option>
                             <?php
                                 $SQL = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop ORDER BY Naam";
@@ -125,10 +125,10 @@
                                 while($row = mysqli_fetch_array($result)) {
                                     if ($row['CurrentDeeln'] == $row['MaxDeelnemers'])
                                     {
-                                        echo "<option value='".$row['ID']."' disabled>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";
+                                        echo "<option value='".$row['ID']."' disabled>".$row['Naam']." | ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";
                                     }
                                    
-                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `WorkShopRonde`.`WorkshopID` AS Workshop
+                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
                                     FROM `workshop`
                                         LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
                                         LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
@@ -139,16 +139,18 @@
                                        $block_row = mysqli_fetch_array($block_result);
                                        if ($block_row['Workshop'] == $row['ID'])
                                        {
-                                        echo "<option disabled value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
+
+                                        echo "<option disabled value='".$row['ID']."'>".$row['Naam']." | ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
                                        }
                                         else {
-                                    echo "<option value='".$row['ID']."'>".$row['Naam']."| ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
+
+                                    echo "<option value='".$row['ID']."'>".$row['Naam']." | ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>"; 
+                                    //echo "<option>".$block_sql."</option>"; 
                                     }
                                 }
                             ?>
                         </select>
-                    </div>
-                    
+                    </div> 
                     <div id="workshopoms"></div>
 
                     <div class="form-group col-sm-12">
@@ -160,7 +162,7 @@
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 while($row = mysqli_fetch_array($result)) {
-                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `WorkShopRonde`.`WorkshopID` AS Workshop
+                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
     FROM `workshop`
         LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
         LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
@@ -246,7 +248,7 @@
     $inschrijving_result = mysqli_query($PM, $inschrijving_sql);
     $inschrijving_count = mysqli_num_rows($inschrijving_result);
 
-    if ($inschrijving_count == 2) {
+    if ($inschrijving_count >= 2) {
         //Script voor uitschakelen van invoervelden
         ?>
         <script>
@@ -280,7 +282,35 @@
             <br/>
         </div>
         <!-- ./CONTAINER -->
-    
+    <script type="text/javascript">
+    	function getVal() {
+    		var str = document.getElementById("workshopselect").value;
+    		showOms(str);
+       	}
+
+    	function showOms(str) {
+				if (str == "") {
+					document.getElementById("workshopoms").innerHTML = "";
+					return;
+				} else {
+					if (window.XMLHttpRequest) {
+						// code for IE7+, Firefox, Chrome, Opera, Safari
+						xmlhttp = new XMLHttpRequest();
+					} else {
+						// Voor Laurens :3
+						xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					xmlhttp.onreadystatechange = function () {
+						if (this.readyState == 4 && this.status == 200) {
+							document.getElementById("workshopoms").innerHTML = this.responseText;
+						}
+					};
+					xmlhttp.open("GET", "getoms.php?q=" + str, true);
+					xmlhttp.send();
+				}
+			}
+    </script>
+    <br><br>
     </body>
 
     </html>
