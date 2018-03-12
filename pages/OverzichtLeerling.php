@@ -15,15 +15,15 @@
         $rInput = $_POST["rondeselect"];
         $studentID = $_SESSION["ID"];
 
-        $SQL = "SELECT * FROM workshopronde WHERE rondeID = $rInput AND workshopID = $wsInput";
+        echo $SQL = "SELECT * FROM workshopronde WHERE rondeID = $rInput AND workshopID = $wsInput";
         $result = mysqli_query($PM, $SQL);
         $row = mysqli_fetch_assoc($result);    
         $wrID = $row['ID'];
     
-        $SQL2 = "INSERT INTO `studentinschrijving`(`StudentID`, `WorkShopRondeID`) VALUES ($studentID, $wrID)";
+        echo $SQL2 = "INSERT INTO `studentinschrijving`(`StudentID`, `WorkShopRondeID`) VALUES ($studentID, $wrID)";
         mysqli_query($PM, $SQL2);
 
-        $SQL3 = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop WHERE ID = '$wrID'";
+       echo $SQL3 = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop WHERE ID = '$wrID'";
         mysqli_select_db($PM, $database);
         $result3 = mysqli_query($PM, $SQL3);
         $row3 = mysqli_fetch_array($result3);
@@ -108,7 +108,7 @@
                     <i>
                      <p style="color:red; text-align: center;">Na het inschrijven voor een workshop kan deze niet meer worden aangepast!!</p>
                      <p style="color:red; text-align: center;">Je moet je inschrijven voor 2 workshops!</p>
-                     
+
                 </i>
                 <br>
 
