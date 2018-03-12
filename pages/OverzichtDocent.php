@@ -5,10 +5,11 @@ $Username = "Gebruiker";
 if ($_SESSION['logged'] == false) {
     echo("<script>location.href='../index.php';</script>");
 }
-
-
-
-
+if ($_SESSION['ID'] != "31") {
+    echo("<script>location.href='OverzichtLeerling.php';</script>");
+} else {
+    echo("<script>location.href='OverzichtDocent.php';</script>");
+}
 
 /*$file="demo.xls";
 $test="<table  ><tr><td>Cell 1</td><td>Cell 2</td></tr></table>";
@@ -89,7 +90,7 @@ echo $test; */
                     </ul>
                         <p>
                             Welkom <?php echo $_SESSION["login_naam"]; ?>&nbsp;
-                            <button class="btn btn-secondary" onclick="window.location.href='../Includes/logout.php';" >Loguit</button>
+                            <button class="btn btn-secondary" onclick="window.location.href='../includes/logout.php';" >Loguit</button>
                         </p>
                 </div>
             </nav>
@@ -97,7 +98,7 @@ echo $test; */
             <div class="container" style="background-color: white;">
                 <div class="row">
                     <div class="col-md-2 align-self-end" align="left">
-                    <input class="btn btn-primary" type="button" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
+                    <input type="button" class="btn btn-success" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
                         
                     </div>
                 </div>
@@ -122,7 +123,7 @@ echo $test; */
                                 ORDER BY Workshop, Ronde, Voornaam, Achternaam";
                                 $result = mysqli_query($PM, $sql) or die(mysqli_error());
                                 while($row = mysqli_fetch_array($result)) {
-                            ?>
+                            ?>  
                                     <tr>
                                         <td><?php echo $row['Voornaam']. " " .$row['Achternaam']; ?></td>
                                         <td><?php echo $row['Workshop']; ?></td>
@@ -136,5 +137,6 @@ echo $test; */
                     </div>
                 </div>
             </div>
+
         </body>
     </html>
