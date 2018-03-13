@@ -123,11 +123,6 @@
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 while($row = mysqli_fetch_array($result)) {
-                                    if ($row['CurrentDeeln'] == $row['MaxDeelnemers'])
-                                    {
-                                        echo "<option value='".$row['ID']."' disabled>".$row['Naam']." | ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";
-                                    }
-                                   
                                     $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
                                     FROM `workshop`
                                         LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
