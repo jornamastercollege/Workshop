@@ -44,14 +44,25 @@ error_reporting(E_ERROR | E_PARSE);
 						";
 						
 				} else {
-					if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $userName))
+					if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/EABCDEFGHIJKLNMOPQRSTUVWXYZ', $userName))
 					{
 							echo "
 								<div class='wrong jumbotron'>
-									Het leerlingnummer bevat ongeldige karakters!
+									Timo kanker op
 								</div>	
 							";
-					} else {
+					} else 
+					if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $LastName))
+						{
+								
+								echo "
+									<div class='wrong jumbotron'>
+										De Voornaam bevat ongeldige karakters!
+									</div>	
+								";
+								
+						} 
+					else {
 						$sql = "INSERT INTO student (StudentNr, Wachtwoord, Voornaam, Achternaam) VALUES ('$userName', '$userPass', '$FirstName', '$LastName')";
 		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);

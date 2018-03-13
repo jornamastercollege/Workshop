@@ -37,19 +37,21 @@
         }
     }
 
-
 ?>
+
     <html>
 
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
             crossorigin="anonymous">
         <link href="style.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.js"></script>
         <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-        <script src="../includes/jquery.js" />
+      
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
+
+          <script src="../Includes/jquery.js"> </script>
+
         <title>HealthEvent -
             <?php echo $_SESSION['login_naam']; ?>
         </title>
@@ -111,29 +113,62 @@
                     <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
                         <option value="0" disabled selected>kies een workshop</option>
                         <?php
-                                $SQL = "SELECT `workshop`.`Naam` AS Workshop, `studentinschrijving`.`StudentID`,`workshopronde`.`MaxDeelnemers` AS MaxDeelnemers, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
+
+                                $SQL = "SELECT `workshop`.`Naam` AS Workshop, `workshopronde`.`RondeID` AS RondeID, `studentinschrijving`.`StudentID`,`workshopronde`.`MaxDeelnemers` AS MaxDeelnemers, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
+                                
+                                //Globale declaratie
+                                $plekvrij1 = false;
+                                $plekvrij2 = false;
+                                $mdeelnemers = 0;
+                                $ideelnemers = 0;
+                                $rondeID = "";
+                                
                                 while($row = mysqli_fetch_array($result)) {
+
+                                    $mdeelnemers = $row["MaxDeelnemers"];
+                                    $ideelnemers = $row["studentinschrijving"];
+                                    $rondeID = $row["RondeID"];
+                                    
+                                    if ($rondeID == 1) {
+                                        if ($mdeelnemers >= $ideelnemers )
+                                        {
+                                            $plekvrij1 = true;
+                                        }
+                                        else {
+                                            $plekvrij1 = false;
+                                        }
+                                    }
+                                    elseif ($rondeID == 2)
+                                    {
+                                        if ($mdeelnemers >= $ideelnemers ){
+                                            $plekvrij2 = true;
+                                        }
+                                        else{
+                                            $plekvrij2 = false;
+                                        }
+                                        
+                                    }
+                                   
                                     $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
                                     FROM `workshop`
-                                        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
-                                        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
-                                        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
-                                        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
-                                        WHERE `student`.`ID` = '$studentID'";
-                                       $block_result = mysqli_query($PM, $block_sql);
-                                       $block_row = mysqli_fetch_array($block_result);
+                                    LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+                                    LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+                                    LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+                                    LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+                                    WHERE `student`.`ID` = '$studentID'";
+                                    $block_result = mysqli_query($PM, $block_sql);
+                                    $block_row = mysqli_fetch_array($block_result);
+
                                        if ($row['studentinschrijving'] == $row['MaxDeelnemers'])
                                        {
                                         echo "<option disabled value=''>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>";  
                                        }
                                         else {
-
-                                    echo "<option value='".$row['ID']."'>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>"; 
-                                    //echo "<option>".$block_sql."</option>"; 
-                                    }
-                                }
+                                            echo "<option value='".$row['ID']."'>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>"; 
+                                        }//else
+                                }//while
                             ?>
                     </select>
                 </div>
@@ -141,7 +176,7 @@
 
                 <div class="form-group col-sm-12">
                     <label class="control-label col-sm-2">Ronde:</label>
-                    <select name="rondeselect" id="rondeselect" class="form-control" required="required">
+                    <select name="rondeselect" id="rondeselect" onclick="restrictround()" class="form-control" required="required">
                         <option value="0" disabled selected>Kies een ronde</option>
                         <?php
                                 $SQL = "SELECT Nummer, ID FROM ronde";
@@ -224,6 +259,7 @@
         </div>
         <!-- ./CONTAINER -->
         <?php
+
     $studentID = $_SESSION["ID"];
     $inschrijving_sql = "SELECT StudentID FROM studentinschrijving WHERE StudentID = $studentID";
     $inschrijving_result = mysqli_query($PM, $inschrijving_sql);
@@ -254,22 +290,62 @@
                     workshopselect.disabled = false;
                 </script>
                 <?php
-    }
-    
+    }  
 ?>
                     </select>
                     </div>
                     </form>
                     <br/>
                     </div>
-                    <!-- ./CONTAINER -->
+
+                    <div id="dom-target" style="display: none;">
+                    <?php 
+                     echo htmlspecialchars($rondeID);
+                    ?>
+                </div>
+
+
+                    
+                    <script src='jquery.js'></script>
+
+                    <script>
+                        //Jquery werkt
+
+                         function restrictround() {
+                            console.log("RESTRICTROUND() uitgevoerd");
+                            
+                            //get the data from invisible html dom element
+                            var div = document.getElementById("dom-target");
+                            var myData = div.textContent;
+
+
+                            console.log(myData);
+                            
+                            var rselected = $("#rondeselect :selected").text();
+                            
+                            if ( rselected == 1 ) {
+                                
+                            }
+                            else if (rselected == 2) {
+
+                            }
+                            
+
+                        }
+
+                     </script>
+
                     <script type="text/javascript">
+
                         function getVal() {
                             var str = document.getElementById("workshopselect").value;
                             showOms(str);
                         }
 
+                     
+
                         function showOms(str) {
+
                             if (str == "") {
                                 document.getElementById("workshopoms").innerHTML = "";
                                 return;
