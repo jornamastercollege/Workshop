@@ -17,7 +17,7 @@
 
         echo $SQL = "SELECT * FROM workshopronde WHERE rondeID = $rInput AND workshopID = $wsInput";
         $result = mysqli_query($PM, $SQL);
-        $row = mysqli_fetch_assoc($result);    
+        $row = mysqli_fetch_assoc($result);
         $wrID = $row['ID'];
     
         echo $SQL2 = "INSERT INTO `studentinschrijving`(`StudentID`, `WorkShopRondeID`) VALUES ($studentID, $wrID)";
@@ -111,7 +111,7 @@
                     <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
                         <option value="0" disabled selected>kies een workshop</option>
                         <?php
-                                $SQL = "SELECT ID, Naam, Omschrijving, MaxDeelnemers, CurrentDeeln FROM workshop ORDER BY Naam";
+                                $SQL = "SELECT `workshop`.`Naam`, `studentinschrijving`.`StudentID`, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 while($row = mysqli_fetch_array($result)) {
@@ -124,13 +124,13 @@
                                         WHERE `student`.`ID` = '$studentID'";
                                        $block_result = mysqli_query($PM, $block_sql);
                                        $block_row = mysqli_fetch_array($block_result);
-                                       if ($row['CurrentDeeln'] == $row['MaxDeelnemers'])
+                                       if ($row['studentinschrijving'] == $row['MaxDeelnemers'] || $block_row['Workshop'] == $row['ID'])
                                        {
-                                        echo "<option disabled value=''>".$row['Naam']." | ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>";  
+                                        echo "<option disabled value=''>".$row['Naam']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>";  
                                        }
                                         else {
 
-                                    echo "<option value='".$row['ID']."'>".$row['Naam']." | ".$row['CurrentDeeln']."/".$row['MaxDeelnemers']."</option>"; 
+                                    echo "<option value='".$row['ID']."'>".$row['Naam']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>"; 
                                     //echo "<option>".$block_sql."</option>"; 
                                     }
                                 }
@@ -290,6 +290,7 @@
                                 xmlhttp.send();
                             }
                         }
+                        
                     </script>
                     <br>
                     <br>
