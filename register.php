@@ -16,6 +16,15 @@ error_reporting(E_ERROR | E_PARSE);
 		$FirstName = mysqli_real_escape_string($PM, $_POST['Voornaam']);
 		$LastName = mysqli_real_escape_string($PM, $_POST['Achternaam']);
 		$userName = mysqli_real_escape_string($PM, $_POST['Leerlingnummer']);
+		if(preg_match ('/[^a-zA-Z]/', $_POST['Voornaam'])){
+			echo "Ongeldige Voornaam";
+			}
+		if(ctype_alpha($_POST['Voornaam'])){
+			echo "Invalid characters";
+			}
+		if (!preg_match('/^[a-z0-9 .\-]+$/i', $userPass)){
+			echo "Ongeldig Wachtwoord";
+		}
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
 		$sql = "INSERT INTO student (StudentNr, Wachtwoord, Voornaam, Achternaam) VALUES ('$userName', '$userPass', '$FirstName', '$LastName')";
 		mysqli_select_db($PM, $database);
@@ -81,7 +90,7 @@ error_reporting(E_ERROR | E_PARSE);
 				<form method="POST" action="">
 					<div class="form-group ">
 						<label class="control-label " for="gebruikersnaam">
-							Voornaam:
+							Voornaamm:
                         </label>
                         <div class="input-group">
 							<div class="input-group-addon">
