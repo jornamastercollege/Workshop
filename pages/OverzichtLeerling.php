@@ -111,7 +111,7 @@
                     <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
                         <option value="0" disabled selected>kies een workshop</option>
                         <?php
-                                $SQL = "SELECT `workshop`.`Naam` AS Workshop, `studentinschrijving`.`StudentID`, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
+                                $SQL = "SELECT `workshop`.`Naam` AS Workshop, `studentinschrijving`.`StudentID`,`workshopronde`.`MaxDeelnemers` AS MaxDeelnemers, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 while($row = mysqli_fetch_array($result)) {
