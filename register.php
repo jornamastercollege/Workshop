@@ -26,7 +26,33 @@ error_reporting(E_ERROR | E_PARSE);
 			echo "Ongeldig Wachtwoord";
 		}
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
-		$sql = "INSERT INTO student (StudentNr, Wachtwoord, Voornaam, Achternaam) VALUES ('$userName', '$userPass', '$FirstName', '$LastName')";
+		if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $FirstName)) { 	
+				echo "
+					<div class='wrong jumbotron'>
+						De Voornaam bevat ongeldige karakters!
+					</div>	
+				";
+				
+			} else {
+				if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $LastName))
+				{
+						
+						echo "
+							<div class='wrong jumbotron'>
+								De Voornaam bevat ongeldige karakters!
+							</div>	
+						";
+						
+				} else {
+					if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $userName))
+					{
+							echo "
+								<div class='wrong jumbotron'>
+									Het leerlingnummer bevat ongeldige karakters!
+								</div>	
+							";
+					} else {
+						$sql = "INSERT INTO student (StudentNr, Wachtwoord, Voornaam, Achternaam) VALUES ('$userName', '$userPass', '$FirstName', '$LastName')";
 		mysqli_select_db($PM, $database);
 		$result = mysqli_query($PM, $sql);
 		if (!$result)
@@ -48,7 +74,9 @@ error_reporting(E_ERROR | E_PARSE);
 			$_SESSION['ID'] = $id;
 
 			header("location: pages/OverzichtLeerling.php");
-		
+					}
+				}	
+			}		
 	}
 ?>
 <!DOCTYPE html>
