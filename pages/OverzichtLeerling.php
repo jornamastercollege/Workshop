@@ -113,28 +113,33 @@
                     <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
                         <option value="0" disabled selected>kies een workshop</option>
                         <?php
-
+                                
                                 $SQL = "SELECT `workshop`.`Naam` AS Workshop, `workshopronde`.`RondeID` AS RondeID, `studentinschrijving`.`StudentID`,`workshopronde`.`MaxDeelnemers` AS MaxDeelnemers, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
                                 mysqli_select_db($PM, $database);
                                 $result = mysqli_query($PM, $SQL);
                                 
                                 //Globale declaratie
-                                $plekvrij1 = false;
-                                $plekvrij2 = false;
+                                $w1plekvrij1 = false;
+                                $w1plekvrij2 = false;
+
                                 $mdeelnemers = 0;
                                 $ideelnemers = 0;
                                 $rondeID = "";
+
+                               
                                 
-                                while($row = mysqli_fetch_array($result)) {
+                                while($row = mysqli_fetch_array($result)) { //'for each' result
 
                                     $mdeelnemers = $row["MaxDeelnemers"];
                                     $ideelnemers = $row["studentinschrijving"];
                                     $rondeID = $row["RondeID"];
+
                                     
                                     if ($rondeID == 1) {
                                         if ($mdeelnemers >= $ideelnemers )
                                         {
                                             $plekvrij1 = true;
+                                            
                                         }
                                         else {
                                             $plekvrij1 = false;
@@ -169,6 +174,10 @@
                                             echo "<option value='".$row['ID']."'>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>"; 
                                         }//else
                                 }//while
+
+                                $BEREKENSQL = " UPDATE `workshopronde` SET `full` = CASE WHEN $mdeelnemers >= $ideelnemers THEN `full` = 1 ELSE `full` = 0 END "
+                                
+
                             ?>
                     </select>
                 </div>
@@ -300,7 +309,7 @@
 
                     <div id="dom-target" style="display: none;">
                     <?php 
-                     echo htmlspecialchars($rondeID);
+                     echo htmlspecialchars($plekvrij1);
                     ?>
                 </div>
 
@@ -315,11 +324,13 @@
                             console.log("RESTRICTROUND() uitgevoerd");
                             
                             //get the data from invisible html dom element
-                            var div = document.getElementById("dom-target");
-                            var myData = div.textContent;
+                            //var div = document.getElementById("dom-target");
+                            //var phpvar1 = div.textContent;
+                            // Voorbeeld Stack overflow!
 
+                            var phpvar1 = $("#dom-target").text();
 
-                            console.log(myData);
+                            console.log(phpvar1);
                             
                             var rselected = $("#rondeselect :selected").text();
                             
@@ -341,8 +352,6 @@
                             var str = document.getElementById("workshopselect").value;
                             showOms(str);
                         }
-
-                     
 
                         function showOms(str) {
 
