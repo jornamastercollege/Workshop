@@ -124,7 +124,7 @@
                                         WHERE `student`.`ID` = '$studentID'";
                                        $block_result = mysqli_query($PM, $block_sql);
                                        $block_row = mysqli_fetch_array($block_result);
-                                       if ($row['studentinschrijving'] == $row['MaxDeelnemers'] || $block_row['Workshop'] == $row['ID'])
+                                       if ($row['studentinschrijving'] == $row['MaxDeelnemers'])
                                        {
                                         echo "<option disabled value=''>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>";  
                                        }
