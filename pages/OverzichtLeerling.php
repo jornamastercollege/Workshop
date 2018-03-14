@@ -90,11 +90,8 @@
             <h5 style="text-align: center;"> Welkom
                 <?php echo $_SESSION["login_naam"] ?>!</h5>
            
-                <p style="color:red; text-align: center;">Na het inschrijven voor een workshop kan deze niet meer worden aangepast!!</p>
-                <p style="color:red; text-align: center;">Je
-                    <u>
-                        <b>moet</b>
-                    </u> je inschrijven voor 2 workshops!</p>
+                <p style="color:red; text-align: center;">Na het inschrijven voor een workshop kan deze <u><b>niet</b></u> meer worden aangepast!!</p>
+                <p style="color:red; text-align: center;">Je <u><b>moet</b></u> je inschrijven voor 2 workshops!</p>
 
                 <form class="form-horizontal" action="Action.php" method="POST" required>
 
@@ -102,7 +99,7 @@
 
                         <label class="control-label col-sm-2">kies uw workshop tijdens ronde 1:</label>
                         <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
-                            <option value="0" disabled selected>Selecteer uw 1e workshop</option>
+                            <option disabled selected>Selecteer uw 1e workshop</option>
 
                             <?php
 
@@ -150,13 +147,13 @@
 
                     </div>
 
-                    <div class="workshopoms"></div>
+                    <div id="workshopoms"></div>
                     <div class="form-group col-sm-12">
 
                         <br>
                         <label class="control-label col-sm-2">kies uw workshop tijdens ronde 2:</label>
-                        <select name="workshopselect2" id="workshopselect2" class="form-control" required="required" onchange="getVal()">
-                            <option value="0" disabled selected>Selecteer uw 2e workshop</option>
+                        <select name="workshopselect2" id="workshopselect2" class="form-control" required="required" onchange="getVal2()">
+                            <option disabled selected>Selecteer uw 2e workshop</option>
 
                             <?php
 
@@ -201,7 +198,7 @@ while($row = mysqli_fetch_array($result)) { //'for each' result
 ?>
 </select>
 </div>
-
+<div id="workshopoms"></div>
  <div class="form-group col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-default" name="submit" />
                 </div>
@@ -295,6 +292,11 @@ while($row = mysqli_fetch_array($result)) { //'for each' result
         <script type="text/javascript">
             function getVal() {
                 var str = document.getElementById("workshopselect").value;
+                showOms(str);
+            }
+
+            function getVal2() {
+                var str = document.getElementById("workshopselect2").value;
                 showOms(str);
             }
 

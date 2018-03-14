@@ -8,7 +8,8 @@
  }
  if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $wsInput = $_POST["workshopselect"];
+    if (!empty($_POST["worksgopselect"]) && !empty($_POST["workshopselect2"])) {
+         $wsInput = $_POST["workshopselect"];
     $wsInput2 = $_POST["workshopselect2"];
     $studentID = $_SESSION['ID'];
 
@@ -25,5 +26,7 @@
     } else {
         header("Location: OverzichtLeerling.php");
     }
+    }
+   
 }
 ?>
