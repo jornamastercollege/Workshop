@@ -89,7 +89,7 @@
 
             <h5 style="text-align: center;"> Welkom
                 <?php echo $_SESSION["login_naam"] ?>!</h5>
-            <i>
+           
                 <p style="color:red; text-align: center;">Na het inschrijven voor een workshop kan deze niet meer worden aangepast!!</p>
                 <p style="color:red; text-align: center;">Je
                     <u>
@@ -133,7 +133,7 @@
                                     }
                                     else
                                     {
-                                        echo "<option disabled value='$wsid'>$wsnaam - $regstudent / $wsmax </option>";
+                                        echo "<option disabled value=''>$wsnaam - $regstudent / $wsmax </option>";
                                     }
 
                                     
@@ -150,7 +150,7 @@
 
                     </div>
 
-
+                    <div class="workshopoms"></div>
                     <div class="form-group col-sm-12">
 
                         <br>
@@ -187,7 +187,7 @@ while($row = mysqli_fetch_array($result)) { //'for each' result
     }
     else
     {
-        echo "<option disabled value='$wsid'>$wsnaam - $regstudent / $wsmax </option>";
+        echo "<option disabled value=''>$wsnaam - $regstudent / $wsmax </option>";
     }
 
     
@@ -265,76 +265,32 @@ while($row = mysqli_fetch_array($result)) { //'for each' result
     $inschrijving_sql = "SELECT StudentID FROM studentinschrijving WHERE StudentID = $studentID";
     $inschrijving_result = mysqli_query($PM, $inschrijving_sql);
     $inschrijving_count = mysqli_num_rows($inschrijving_result);
+    echo $inschrijving_count;
 
     if ($inschrijving_count >= 2) {
         //Script voor uitschakelen van invoervelden
         ?>
                         <script>
-                            rondeselect.disabled = true;
-                            workshopselect.disabled = true;
+                            document.getElementById("workshopselect2").disabled = true;
+                            document.getElementById("workshopselect").disabled = true;
                         </script>
                         <?php 
     }
-    elseif ($inschrijving_count < 2) {
-        //script voor te weinig inschrijvingen
+    else {
+      
         ?>
                         <script>
-                            rondeselect.disabled = false;
-                            workshopselect.disabled = false;
+                           document.getElementById("workshopselect2").disabled = false;
+                            document.getElementById("workshopselect").disabled = false;
                         </script>
                         <?php
     }
-    elseif ($inschrijving_count > 2) {
-        ?>
-                            <script>
-                                rondeselect.disabled = false;
-                                workshopselect.disabled = false;
-                            </script>
-                            <?php
-    }  
 ?>
                                 </select>
         </div>
         </form>
         <br/>
         </div>
-
-        <div id="dom-target" style="display: none;">
-            <?php 
-                     echo htmlspecialchars($plekvrij1);
-                    ?>
-        </div>
-
-
-
-        <script src='jquery.js'></script>
-
-        <script>
-            //Jquery werkt
-
-            function restrictround() {
-                console.log("RESTRICTROUND() uitgevoerd");
-
-                //get the data from invisible html dom element
-                //var div = document.getElementById("dom-target");
-                //var phpvar1 = div.textContent;
-                // Voorbeeld Stack overflow!
-
-                var phpvar1 = $("#dom-target").text();
-
-                console.log(phpvar1);
-
-                var rselected = $("#rondeselect :selected").text();
-
-                if (rselected == 1) {
-
-                } else if (rselected == 2) {
-
-                }
-
-
-            }
-        </script>
 
         <script type="text/javascript">
             function getVal() {
