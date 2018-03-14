@@ -13,6 +13,8 @@ error_reporting(E_ERROR | E_PARSE);
 # Login #
 	if($_SERVER["REQUEST_METHOD"] == "POST")
 	{
+		if ($_POST['gebruikersnaam'] != " " && $_POST['wachtwoord'] != "" && strlen($_POST['gebruikersnaam']) < "4") {
+
 		$userName = mysqli_real_escape_string($PM, $_POST['gebruikersnaam']);
 		$userPass = mysqli_real_escape_string($PM, $_POST['wachtwoord']);
 		$sql = "SELECT * FROM student WHERE StudentNr = '$userName' AND Wachtwoord = '$userPass'";
@@ -42,14 +44,22 @@ error_reporting(E_ERROR | E_PARSE);
 
 
 		
-			if ($userName === "1984312" || $userPass === "RG9jZW50ZW53YWNodHdvb3JkMTIzQCE=") {
+			if ($userName === "1984312" || $userPass === "docent") {
 				header("location: pages/OverzichtDocent.php");
 			}
 			else{
 			header("location: pages/OverzichtLeerling.php");
 			}
 		}
-
+		else
+		{
+				echo "
+					<div class='wrong jumbotron'>
+						De gebruikersnaam of het wachtwoord wat u heeft ingevuld is niet correct!
+					</div>	
+				";
+		}
+	}
 		else
 		{
 				echo "
