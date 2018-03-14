@@ -27,6 +27,6 @@
         header("Location: OverzichtLeerling.php");
     }
     }
-   
+    header("Location: OverzichtLeerling.php");
 }
 ?>
