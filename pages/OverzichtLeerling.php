@@ -9,7 +9,6 @@
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST") {
-        #Andres: ik ga een overzicht maken van de workshops waar leerling ingeschreven staat
 
         $wsInput = $_POST["workshopselect"];
         $rInput = $_POST["rondeselect"];
@@ -46,11 +45,12 @@
             crossorigin="anonymous">
         <link href="style.css" />
         <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-      
+
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
             crossorigin="anonymous"></script>
 
-          <script src="../Includes/jquery.js"> </script>
+        <script src="../Includes/jquery.js">
+        </script>
 
         <title>HealthEvent -
             <?php echo $_SESSION['login_naam']; ?>
@@ -103,138 +103,133 @@
                         <b>moet</b>
                     </u> je inschrijven voor 2 workshops!</p>
 
-            </i>
-            <br>
+                <form class="form-horizontal" action="Action.php" method="POST" required>
 
-            <form class="form-horizontal" action="Action.php" method="POST" required>
+                    <div class="form-group col-sm-12">
 
-                <div class="form-group col-sm-12">
-                    <label class="control-label col-sm-2">Activiteiten:</label>
-                    <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
-                        <option value="0" disabled selected>kies een workshop</option>
-                        <?php
-                                
-                                $SQL = "SELECT `workshop`.`Naam` AS Workshop, `workshopronde`.`RondeID` AS RondeID, `studentinschrijving`.`StudentID`,`workshopronde`.`MaxDeelnemers` AS MaxDeelnemers, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
+                        <label class="control-label col-sm-2">kies uw workshop tijdens ronde 1:</label>
+                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
+                            <option value="0" disabled selected>Selecteer uw 1e workshop</option>
+
+                            <?php
+
+                                //
+                                //hier beginnen de uitvoering van data naar dropdown 1:
+                                //
+
+                                $SQL = "SELECT `workshopronde`.`RondeID` AS Ronde, `workshopronde`.`ID` AS wsid, `workshop`.`Naam` AS `Workshop`, COUNT(`studentinschrijving`.`ID`) AS curent, `workshopronde`.`MaxDeelnemers` AS `Max`
+                                FROM `workshopronde`
+                                    LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+                                    LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+                                    WHERE `workshopronde`.`RondeID` = 1
+                                GROUP BY `workshopronde`.`ID`
+                                ORDER BY `workshop`.`Naam`";
+
                                 mysqli_select_db($PM, $database);
-                                $result = mysqli_query($PM, $SQL);
-                                
-                                //Globale declaratie
-                                $w1plekvrij1 = false;
-                                $w1plekvrij2 = false;
+                                $result = mysqli_query($PM, $SQL); 
 
-                                $mdeelnemers = 0;
-                                $ideelnemers = 0;
-                                $rondeID = "";
-
-                               
-                                
                                 while($row = mysqli_fetch_array($result)) { //'for each' result
+                                    
+                                    $wsnaam = $row["Workshop"];
+                                    $wsmax = $row["Max"];
+                                    $regstudent = $row["curent"];
+                                    $wsid = $row["wsid"];
 
-                                    $mdeelnemers = $row["MaxDeelnemers"];
-                                    $ideelnemers = $row["studentinschrijving"];
-                                    $rondeID = $row["RondeID"];
+                                    if($regstudent<=$wsmax){
+                                        echo "<option value='$wsid'>$wsnaam - $regstudent / $wsmax </option>";
+                                    }
+                                    else
+                                    {
+                                        echo "<option disabled value='$wsid'>$wsnaam - $regstudent / $wsmax </option>";
+                                    }
 
                                     
-                                    if ($rondeID == 1) {
-                                        if ($mdeelnemers >= $ideelnemers )
-                                        {
-                                            $plekvrij1 = true;
-                                            
-                                        }
-                                        else {
-                                            $plekvrij1 = false;
-                                        }
-                                    }
-                                    elseif ($rondeID == 2)
-                                    {
-                                        if ($mdeelnemers >= $ideelnemers ){
-                                            $plekvrij2 = true;
-                                        }
-                                        else{
-                                            $plekvrij2 = false;
-                                        }
-                                        
-                                    }
-                                   
-                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
-                                    FROM `workshop`
-                                    LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
-                                    LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
-                                    LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
-                                    LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
-                                    WHERE `student`.`ID` = '$studentID'";
-                                    $block_result = mysqli_query($PM, $block_sql);
-                                    $block_row = mysqli_fetch_array($block_result);
-
-                                       if ($row['studentinschrijving'] == $row['MaxDeelnemers'])
-                                       {
-                                        echo "<option disabled value=''>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>";  
-                                       }
-                                        else {
-                                            echo "<option value='".$row['ID']."'>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>"; 
-                                        }//else
-                                }//while
-
-                                $BEREKENSQL = " UPDATE `workshopronde` SET `full` = CASE WHEN $mdeelnemers >= $ideelnemers THEN `full` = 1 ELSE `full` = 0 END "
-                                
-
-                            ?>
-                    </select>
-                </div>
-                <div id="workshopoms"></div>
-
-                <div class="form-group col-sm-12">
-                    <label class="control-label col-sm-2">Ronde:</label>
-                    <select name="rondeselect" id="rondeselect" onclick="restrictround()" class="form-control" required="required">
-                        <option value="0" disabled selected>Kies een ronde</option>
-                        <?php
-                                $SQL = "SELECT Nummer, ID FROM ronde";
-                                mysqli_select_db($PM, $database);
-                                $result = mysqli_query($PM, $SQL);
-                                while($row = mysqli_fetch_array($result)) {
-                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
-    FROM `workshop`
-        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
-        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
-        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
-        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
-        WHERE `student`.`ID` = '$studentID'";
-       $block_result = mysqli_query($PM, $block_sql);
-       $block_row = mysqli_fetch_array($block_result);
-
-       if ($block_row['nummy'] == $row['ID'])
-       {
-        echo "<option disabled value='".$row['ID']."'>".$row['Nummer']."</option>";
-       }
-       else
-       {
-        echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";
-       }
                                 }
-                            ?>
-                    </select>
-                </div>
+                                
+                                //
+                                //hier eindigen de uitvoering van data naar dropdown 1:
+                                //
 
-                <div class="form-group col-sm-offset-2 col-sm-10">
+                                
+                            ?>
+
+                            </select>
+
+                    </div>
+
+
+                    <div class="form-group col-sm-12">
+
+                        <br>
+                        <label class="control-label col-sm-2">kies uw workshop tijdens ronde 2:</label>
+                        <select name="workshopselect2" id="workshopselect2" class="form-control" required="required" onchange="getVal()">
+                            <option value="0" disabled selected>Selecteer uw 2e workshop</option>
+
+                            <?php
+
+//
+//hier beginnen de uitvoering van data naar dropdown 2:
+//
+
+$SQL = "SELECT `workshopronde`.`RondeID` AS Ronde, `workshopronde`.`ID` AS wsid, `workshop`.`Naam` AS `Workshop`, COUNT(`studentinschrijving`.`ID`) AS curent, `workshopronde`.`MaxDeelnemers` AS `Max`
+FROM `workshopronde`
+    LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+    LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+    WHERE `workshopronde`.`RondeID` = 2
+GROUP BY `workshopronde`.`ID`
+ORDER BY `workshop`.`Naam`";
+
+mysqli_select_db($PM, $database);
+$result = mysqli_query($PM, $SQL); 
+
+while($row = mysqli_fetch_array($result)) { //'for each' result
+    
+    $wsnaam = $row["Workshop"];
+    $wsmax = $row["Max"];
+    $regstudent = $row["curent"];
+    $wsid = $row["wsid"];
+
+    if($regstudent<=$wsmax){
+        echo "<option value='$wsid'>$wsnaam - $regstudent / $wsmax </option>";
+    }
+    else
+    {
+        echo "<option disabled value='$wsid'>$wsnaam - $regstudent / $wsmax </option>";
+    }
+
+    
+}
+
+//
+//hier eindigen de uitvoering van data naar dropdown 2:
+//
+
+
+?>
+</select>
+</div>
+
+ <div class="form-group col-sm-offset-2 col-sm-10">
                     <input type="submit" class="btn btn-default" name="submit" />
                 </div>
-            </form>
-            <br/>
+                </form>
 
-            <table style="width:100%;" class="table">
-                <label class="control-label col-sm-2">U staat ingeschreven:</label>
-                <thead class=" thead-dark">
-                    <th>Workshop</th>
-                    <th>Ronde</th>
-                    <th>Ronde Tijd</th>
+<br>
 
-                    <!-- Hier zou ook moeten komen of er nog plek is of niet! -->
+                                <table style="width:100%;" class="table">
+                                    <label class="control-label col-sm-2">U staat ingeschreven:</label>
+                                    <thead class=" thead-dark">
+                                        <th>Workshop</th>
+                                        <th>Ronde</th>
+                                        <th>Ronde Tijd</th>
 
-                </thead>
+                                        <!-- Hier zou ook moeten komen of er nog plek is of niet! -->
 
-                <tbody>
+                                    </thead>
 
-                    <?php
+                                    <tbody>
+
+                                        <?php
 
                     $SQL3 = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`
                     FROM `workshop`
@@ -248,26 +243,30 @@
                     $result = mysqli_query($PM, $SQL3) or die(mysqli_error());
                         while($row = mysqli_fetch_array($result)) {
                         ?>
-                        <tr>
-                            <td>
-                                <?php echo $row['naam']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['nummy']; ?>
-                            </td>
-                            <td>
-                                <?php echo $row['aanvang']; ?>
-                            </td>
-                        </tr>
-                        <?php
+                                            <tr>
+                                                <td>
+                                                    <?php echo $row['naam']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['nummy']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $row['aanvang']; ?>
+                                                </td>
+                                            </tr>
+                                            <?php
 }
 ?>
-                </tbody>
+                                    </tbody>
 
-            </table>
-        </div>
-        <!-- ./CONTAINER -->
-        <?php
+                                </table>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+                    <!-- ./CONTAINER -->
+                    <?php
 
     $studentID = $_SESSION["ID"];
     $inschrijving_sql = "SELECT StudentID FROM studentinschrijving WHERE StudentID = $studentID";
@@ -277,108 +276,104 @@
     if ($inschrijving_count >= 2) {
         //Script voor uitschakelen van invoervelden
         ?>
-            <script>
-                rondeselect.disabled = true;
-                workshopselect.disabled = true;
-            </script>
-            <?php 
+                        <script>
+                            rondeselect.disabled = true;
+                            workshopselect.disabled = true;
+                        </script>
+                        <?php 
     }
     elseif ($inschrijving_count < 2) {
         //script voor te weinig inschrijvingen
         ?>
-            <script>
-                rondeselect.disabled = false;
-                workshopselect.disabled = false;
-            </script>
-            <?php
+                        <script>
+                            rondeselect.disabled = false;
+                            workshopselect.disabled = false;
+                        </script>
+                        <?php
     }
     elseif ($inschrijving_count > 2) {
         ?>
-                <script>
-                    rondeselect.disabled = false;
-                    workshopselect.disabled = false;
-                </script>
-                <?php
+                            <script>
+                                rondeselect.disabled = false;
+                                workshopselect.disabled = false;
+                            </script>
+                            <?php
     }  
 ?>
-                    </select>
-                    </div>
-                    </form>
-                    <br/>
-                    </div>
+                                </select>
+        </div>
+        </form>
+        <br/>
+        </div>
 
-                    <div id="dom-target" style="display: none;">
-                    <?php 
+        <div id="dom-target" style="display: none;">
+            <?php 
                      echo htmlspecialchars($plekvrij1);
                     ?>
-                </div>
+        </div>
 
 
-                    
-                    <script src='jquery.js'></script>
 
-                    <script>
-                        //Jquery werkt
+        <script src='jquery.js'></script>
 
-                         function restrictround() {
-                            console.log("RESTRICTROUND() uitgevoerd");
-                            
-                            //get the data from invisible html dom element
-                            //var div = document.getElementById("dom-target");
-                            //var phpvar1 = div.textContent;
-                            // Voorbeeld Stack overflow!
+        <script>
+            //Jquery werkt
 
-                            var phpvar1 = $("#dom-target").text();
+            function restrictround() {
+                console.log("RESTRICTROUND() uitgevoerd");
 
-                            console.log(phpvar1);
-                            
-                            var rselected = $("#rondeselect :selected").text();
-                            
-                            if ( rselected == 1 ) {
-                                
-                            }
-                            else if (rselected == 2) {
+                //get the data from invisible html dom element
+                //var div = document.getElementById("dom-target");
+                //var phpvar1 = div.textContent;
+                // Voorbeeld Stack overflow!
 
-                            }
-                            
+                var phpvar1 = $("#dom-target").text();
 
+                console.log(phpvar1);
+
+                var rselected = $("#rondeselect :selected").text();
+
+                if (rselected == 1) {
+
+                } else if (rselected == 2) {
+
+                }
+
+
+            }
+        </script>
+
+        <script type="text/javascript">
+            function getVal() {
+                var str = document.getElementById("workshopselect").value;
+                showOms(str);
+            }
+
+            function showOms(str) {
+
+                if (str == "") {
+                    document.getElementById("workshopoms").innerHTML = "";
+                    return;
+                } else {
+                    if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    } else {
+                        // Voor Laurens :3
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("workshopoms").innerHTML = this.responseText;
                         }
-
-                     </script>
-
-                    <script type="text/javascript">
-
-                        function getVal() {
-                            var str = document.getElementById("workshopselect").value;
-                            showOms(str);
-                        }
-
-                        function showOms(str) {
-
-                            if (str == "") {
-                                document.getElementById("workshopoms").innerHTML = "";
-                                return;
-                            } else {
-                                if (window.XMLHttpRequest) {
-                                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                                    xmlhttp = new XMLHttpRequest();
-                                } else {
-                                    // Voor Laurens :3
-                                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                                }
-                                xmlhttp.onreadystatechange = function () {
-                                    if (this.readyState == 4 && this.status == 200) {
-                                        document.getElementById("workshopoms").innerHTML = this.responseText;
-                                    }
-                                };
-                                xmlhttp.open("GET", "getoms.php?q=" + str, true);
-                                xmlhttp.send();
-                            }
-                        }
-                        
-                    </script>
-                    <br>
-                    <br>
+                    };
+                    xmlhttp.open("GET", "getoms.php?q=" + str, true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
+        <br>
+        <br>
     </body>
 
     </html>

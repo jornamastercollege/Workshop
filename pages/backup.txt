@@ -1,0 +1,111 @@
+delet1
+
+            </i>
+            <br>
+
+          
+                                                        $SQL = "SELECT `workshop`.`Naam` AS Workshop, `workshopronde`.`RondeID` AS RondeID, `studentinschrijving`.`StudentID`,`workshopronde`.`MaxDeelnemers` AS MaxDeelnemers, COUNT(`studentinschrijving`.`ID`) AS studentinschrijving FROM `studentinschrijving` LEFT JOIN `workshopronde` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID` LEFT JOIN `workshop` ON `workshopronde`.`WorkShopID` = `workshop`.`ID` GROUP BY `workshop`.`Naam` ORDER BY `Naam`";
+                                mysqli_select_db($PM, $database);
+                                $result = mysqli_query($PM, $SQL);
+                                
+                                //Globale declaratie
+                                $w1plekvrij1 = false;
+                                $w1plekvrij2 = false;
+
+                                $mdeelnemers = 0;
+                                $ideelnemers = 0;
+                                $rondeID = "";
+
+                               
+                                
+                                while($row = mysqli_fetch_array($result)) { //'for each' result
+                                    $mdeelnemers = $row["MaxDeelnemers"];
+                                    $ideelnemers = $row["studentinschrijving"];
+                                    $rondeID = $row["RondeID"];
+
+                                    
+                                    if ($rondeID == 1) {
+                                        if ($mdeelnemers >= $ideelnemers )
+                                        {
+                                            $plekvrij1 = true;
+                                            
+                                        }
+                                        else {
+                                            $plekvrij1 = false;
+                                        }
+                                    }
+                                    elseif ($rondeID == 2)
+                                    {
+                                        if ($mdeelnemers >= $ideelnemers ){
+                                            $plekvrij2 = true;
+                                        }
+                                        else{
+                                            $plekvrij2 = false;
+                                        }
+                                        
+                                    }
+                                   
+                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
+                                    FROM `workshop`
+                                    LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+                                    LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+                                    LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+                                    LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+                                    WHERE `student`.`ID` = '$studentID'";
+                                    $block_result = mysqli_query($PM, $block_sql);
+                                    $block_row = mysqli_fetch_array($block_result);
+
+                                       if ($row['studentinschrijving'] == $row['MaxDeelnemers'])
+                                       {
+                                        echo "<option disabled value=''>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>";  
+                                       }
+                                        else {
+                                            echo "<option value='".$row['ID']."'>".$row['Workshop']." | ".$row['studentinschrijving']."/".$row['MaxDeelnemers']."</option>"; 
+                                        }//else
+                                }//while
+
+                                $BEREKENSQL = " UPDATE `workshopronde` SET `full` = CASE WHEN $mdeelnemers >= $ideelnemers THEN `full` = 1 ELSE `full` = 0 END "
+                                
+
+                            ?>
+                    </select>
+                </div>  
+                <div id="workshopoms"></div>
+
+                <div class="form-group col-sm-12">
+                    <label class="control-label col-sm-2">Ronde:</label>
+                    <select name="rondeselect" id="rondeselect" onclick="restrictround()" class="form-control" required="required">
+                        <option value="0" disabled selected>Kies een ronde</option>
+                        <?php
+                                $SQL = "SELECT Nummer, ID FROM ronde";
+                                mysqli_select_db($PM, $database);
+                                $result = mysqli_query($PM, $SQL);
+                                while($row = mysqli_fetch_array($result)) {
+                                    $block_sql = "SELECT `ronde`.`Nummer` AS `nummy`, `student`.`ID` AS `ID`, `workshop`.`Naam` AS `naam`, `ronde`.`Aanvangstijd` AS `aanvang`, `workshopronde`.`WorkshopID` AS Workshop
+    FROM `workshop`
+        LEFT JOIN `workshopronde` ON `workshopronde`.`WorkShopID` = `workshop`.`ID`
+        LEFT JOIN `ronde` ON `workshopronde`.`RondeID` = `ronde`.`ID`
+        LEFT JOIN `studentinschrijving` ON `studentinschrijving`.`WorkShopRondeID` = `workshopronde`.`ID`
+        LEFT JOIN `student` ON `studentinschrijving`.`StudentID` = `student`.`ID`
+        WHERE `student`.`ID` = '$studentID'";
+       $block_result = mysqli_query($PM, $block_sql);
+       $block_row = mysqli_fetch_array($block_result);
+
+       if ($block_row['nummy'] == $row['ID'])
+       {
+        echo "<option disabled value='".$row['ID']."'>".$row['Nummer']."</option>";
+       }
+       else
+       {
+        echo "<option value='".$row['ID']."'>".$row['Nummer']."</option>";
+       }
+                                }
+                            ?>
+                    </select>
+                </div>
+
+                <div class="form-group col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-default" name="submit" />
+                </div>
+            </form>
+            <br/>
