@@ -45,6 +45,8 @@
 
         </script>
 
+        <script type="text/javascript" src="script.js"></script>
+
         <title>HealthEvent -
             <?php echo $_SESSION['login_naam']; ?>
         </title>
@@ -101,7 +103,7 @@
                     <div class="form-group col-sm-12">
 
                         <label class="control-label col-sm-2">kies uw workshop tijdens ronde 1:</label>
-                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="getVal()">
+                        <select name="workshopselect" id="workshopselect" class="form-control" required="required" onchange="checkWS();">
                             <option value="0" disabled selected>Selecteer uw 1e workshop</option>
 
                             <?php
@@ -155,7 +157,7 @@
 
                         <br>
                         <label class="control-label col-sm-2">kies uw workshop tijdens ronde 2:</label>
-                        <select name="workshopselect2" id="workshopselect2" class="form-control" required="required" onchange="getVal()">
+                        <select name="workshopselect2" id="workshopselect2" class="form-control" required="required" onchange="checkWS()">
                             <option value="0" disabled selected>Selecteer uw 2e workshop</option>
 
                             <?php
@@ -203,7 +205,8 @@ while($row = mysqli_fetch_array($result)) { //'for each' result
 </div>
 
  <div class="form-group col-sm-offset-2 col-sm-10">
-                    <input type="submit" class="btn btn-default" name="submit" />
+ <p id="pid"></p>
+                    <input type="submit" class="btn btn-default" id="submitid" name="submitname" />
                 </div>
                 </form>
 
@@ -293,10 +296,7 @@ while($row = mysqli_fetch_array($result)) { //'for each' result
         </div>
 
         <script type="text/javascript">
-            function getVal() {
-                var str = document.getElementById("workshopselect").value;
-                showOms(str);
-            }
+
 
             function showOms(str) {
 
