@@ -42,14 +42,6 @@ error_reporting(E_ERROR | E_PARSE);
 			$_SESSION['logged'] = true;
 			$_SESSION['ID'] = $id;
 
-
-		
-			if ($userName === "1984312" || $userPass === "docent") {
-				header("location: pages/OverzichtDocent.php");
-			}
-			else{
-			header("location: pages/OverzichtLeerling.php");
-			}
 		}
 		else
 		{
